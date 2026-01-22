@@ -2,6 +2,33 @@ import Header from "@/components/Header";
 import { db } from "@/db";
 import { tutorials } from "@/db/schema";
 import { asc } from "drizzle-orm";
+import Image from "next/image";
+
+// Helper function to extract YouTube video ID from URL
+function getYouTubeVideoId(url: string): string | null {
+  try {
+    const urlObj = new URL(url);
+    // Handle youtube.com/watch?v=VIDEO_ID
+    if (urlObj.hostname.includes("youtube.com") && urlObj.searchParams.has("v")) {
+      return urlObj.searchParams.get("v");
+    }
+    // Handle youtu.be/VIDEO_ID
+    if (urlObj.hostname.includes("youtu.be")) {
+      return urlObj.pathname.slice(1);
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+// Helper function to get YouTube thumbnail URL
+function getYouTubeThumbnail(url: string): string | null {
+  const videoId = getYouTubeVideoId(url);
+  if (!videoId) return null;
+  // Use maxresdefault for highest quality, fallback to hqdefault if needed
+  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+}
 
 export default async function TutorialsPage() {
   const tutorialList = await db
@@ -47,35 +74,40 @@ export default async function TutorialsPage() {
                     {category}
                   </h2>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    {items.map((tutorial) => (
-                      <a
-                        key={tutorial.id}
-                        href={tutorial.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-lg bg-gray-800 p-6 shadow transition-shadow hover:shadow-lg"
-                      >
-                        <h3 className="mb-2 text-lg font-semibold text-gray-100">
-                          {tutorial.title}
-                        </h3>
-                        <div className="flex items-center text-sm text-indigo-400">
-                          <svg
-                            className="mr-1 h-4 w-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                            />
-                          </svg>
-                          View Tutorial
-                        </div>
-                      </a>
-                    ))}
+                    {items.map((tutorial) => {
+                      const thumbnailUrl = getYouTubeThumbnail(tutorial.url);
+                      return (
+                        <a
+                          key={tutorial.id}
+                          href={tutorial.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="overflow-hidden rounded-lg bg-gray-800 shadow transition-shadow hover:shadow-lg"
+                        >
+                          {thumbnailUrl && (
+                            <div className="relative aspect-video w-full">
+                              <Image
+                                src={thumbnailUrl}
+                                alt={tutorial.title}
+                                fill
+                                className="object-cover"
+                                unoptimized
+                              />
+                            </div>
+                          )}
+                          <div className="p-6">
+                            <h3 className="mb-2 text-lg font-semibold text-gray-100">
+                              {tutorial.title}
+                            </h3>
+                            {tutorial.description && (
+                              <p className="text-gray-400">
+                                {tutorial.description}
+                              </p>
+                            )}
+                          </div>
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               ))}

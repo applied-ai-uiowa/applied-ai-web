@@ -14,6 +14,7 @@ export async function createTutorial(
     await requireAdmin();
 
     const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
     const url = formData.get("url") as string;
     const category = formData.get("category") as string;
     const sortOrder = parseInt(formData.get("sortOrder") as string) || 0;
@@ -27,6 +28,7 @@ export async function createTutorial(
 
     await db.insert(tutorials).values({
       title,
+      description: description || null,
       url,
       category,
       sortOrder,
@@ -54,6 +56,7 @@ export async function updateTutorial(
     await requireAdmin();
 
     const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
     const url = formData.get("url") as string;
     const category = formData.get("category") as string;
     const sortOrder = parseInt(formData.get("sortOrder") as string) || 0;
@@ -67,7 +70,7 @@ export async function updateTutorial(
 
     await db
       .update(tutorials)
-      .set({ title, url, category, sortOrder })
+      .set({ title, description: description || null, url, category, sortOrder })
       .where(eq(tutorials.id, id));
 
     revalidatePath("/tutorials");

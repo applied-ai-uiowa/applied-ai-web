@@ -119,21 +119,6 @@ export default function ProjectsList({
 
           <div>
             <label
-              htmlFor="demoUrl"
-              className="block text-sm font-medium text-gray-300"
-            >
-              Demo URL
-            </label>
-            <input
-              type="url"
-              id="demoUrl"
-              name="demoUrl"
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
-            />
-          </div>
-
-          <div>
-            <label
               htmlFor="category"
               className="block text-sm font-medium text-gray-300"
             >
@@ -189,28 +174,16 @@ export default function ProjectsList({
                   {project.description}
                 </p>
               )}
-              <div className="mt-2 flex gap-4">
-                {project.githubUrl && (
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-indigo-400 hover:text-indigo-300"
-                  >
-                    GitHub
-                  </a>
-                )}
-                {project.demoUrl && (
-                  <a
-                    href={project.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-indigo-400 hover:text-indigo-300"
-                  >
-                    Demo
-                  </a>
-                )}
-              </div>
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-block text-sm text-indigo-400 hover:text-indigo-300"
+                >
+                  GitHub
+                </a>
+              )}
             </div>
             <button
               onClick={() => handleDelete(project.id)}

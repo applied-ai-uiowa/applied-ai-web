@@ -14,7 +14,6 @@ export async function createProject(formData: FormData): Promise<ActionResult> {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
     const githubUrl = formData.get("githubUrl") as string;
-    const demoUrl = formData.get("demoUrl") as string;
     const category = formData.get("category") as string;
     const sortOrder = parseInt(formData.get("sortOrder") as string) || 0;
 
@@ -29,7 +28,6 @@ export async function createProject(formData: FormData): Promise<ActionResult> {
       title,
       description: description || null,
       githubUrl: githubUrl || null,
-      demoUrl: demoUrl || null,
       category,
       sortOrder,
     });
@@ -58,7 +56,6 @@ export async function updateProject(
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
     const githubUrl = formData.get("githubUrl") as string;
-    const demoUrl = formData.get("demoUrl") as string;
     const category = formData.get("category") as string;
     const sortOrder = parseInt(formData.get("sortOrder") as string) || 0;
 
@@ -75,7 +72,6 @@ export async function updateProject(
         title,
         description: description || null,
         githubUrl: githubUrl || null,
-        demoUrl: demoUrl || null,
         category,
         sortOrder,
       })

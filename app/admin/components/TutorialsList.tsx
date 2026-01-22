@@ -89,6 +89,21 @@ export default function TutorialsList({
 
           <div>
             <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-300"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              rows={3}
+              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+            />
+          </div>
+
+          <div>
+            <label
               htmlFor="url"
               className="block text-sm font-medium text-gray-300"
             >
@@ -155,11 +170,16 @@ export default function TutorialsList({
             <div>
               <h3 className="font-medium text-gray-100">{tutorial.title}</h3>
               <p className="text-sm text-gray-400">{tutorial.category}</p>
+              {tutorial.description && (
+                <p className="mt-1 text-sm text-gray-400">
+                  {tutorial.description}
+                </p>
+              )}
               <a
                 href={tutorial.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-indigo-400 hover:text-indigo-300"
+                className="mt-2 inline-block text-sm text-indigo-400 hover:text-indigo-300"
               >
                 {tutorial.url}
               </a>

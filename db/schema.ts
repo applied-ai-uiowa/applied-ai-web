@@ -21,6 +21,7 @@ export const meeting = pgTable("meeting", {
 export const tutorials = pgTable("tutorials", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
+  description: text("description"),
   url: text("url").notNull(),
   category: text("category").notNull(), // e.g., "Python", "Machine Learning"
   sortOrder: integer("sort_order").notNull().default(0),
@@ -32,7 +33,6 @@ export const projects = pgTable("projects", {
   title: text("title").notNull(),
   description: text("description"),
   githubUrl: text("github_url"),
-  demoUrl: text("demo_url"),
   category: text("category").notNull(),
   sortOrder: integer("sort_order").notNull().default(0),
   createdAt: timestamp("created_at").notNull().defaultNow(),
