@@ -218,13 +218,15 @@ export default function BoardMembersList({
           >
             <div className="flex gap-4">
               {member.photoUrl && (
-                <Image
-                  src={member.photoUrl}
-                  alt={member.name}
-                  width={64}
-                  height={64}
-                  className="shrink-0 rounded-full object-cover"
-                />
+                <div className="h-16 w-16 shrink-0">
+                  <Image
+                    src={member.photoUrl}
+                    alt={member.name}
+                    width={64}
+                    height={64}
+                    className="h-full w-full rounded-full object-cover"
+                  />
+                </div>
               )}
               <div>
                 <h3 className="font-medium text-gray-100">{member.name}</h3>
