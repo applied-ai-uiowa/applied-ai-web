@@ -3,6 +3,7 @@
 ## What's Been Implemented
 
 ### Core Infrastructure
+
 - ✅ Database schema with Drizzle ORM
 - ✅ Neon Postgres database connection
 - ✅ Database migrations
@@ -11,12 +12,14 @@
 - ✅ Server Actions for all CRUD operations
 
 ### Public Pages
+
 - ✅ Home page with next meeting card
 - ✅ Tutorials page (grouped by category)
 - ✅ Projects page (grouped by category)
 - ✅ Board members page
 
 ### Admin Dashboard
+
 - ✅ Meeting management
 - ✅ Tutorials CRUD
 - ✅ Projects CRUD
@@ -131,20 +134,24 @@ applied-ai-web/
 ## Features
 
 ### Meeting Management
+
 - Single meeting info displayed on home page
 - Admin can update meeting details, datetime, location, RSVP link
 
 ### Tutorials
+
 - Organized by category
 - Each tutorial has title, URL, category, sort order
 - Admin can add/delete tutorials
 
 ### Projects
+
 - Organized by category
 - Each project has title, description, GitHub URL, demo URL
 - Admin can add/delete projects
 
 ### Board Members
+
 - Display active board members
 - Each member has name, role, bio, photo, social links
 - Admin can add/delete/activate/deactivate members
@@ -169,6 +176,7 @@ applied-ai-web/
 Board member photos are stored using Vercel Blob Storage. The `BLOB_READ_WRITE_TOKEN` is already in your `.env.local`.
 
 When adding a board member:
+
 1. Click "Choose Image" to upload a photo
 2. Image uploads automatically to Vercel Blob
 3. Preview shows immediately
