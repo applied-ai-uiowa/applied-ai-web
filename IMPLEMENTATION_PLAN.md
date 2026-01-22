@@ -11,50 +11,50 @@ This document provides a complete, step-by-step implementation plan for the Appl
 ### 1. Clerk + Next.js App Router
 
 - **Middleware-based protection** is the recommended pattern. Use `clerkMiddleware` with `createRouteMatcher` to define public vs protected vs admin routes
-  - *Source: [Clerk Next.js App Quickstart](https://context7.com/clerk/clerk-nextjs-app-quickstart/llms.txt)*
+  - _Source: [Clerk Next.js App Quickstart](https://context7.com/clerk/clerk-nextjs-app-quickstart/llms.txt)_
 - **Server-side auth** in Server Actions uses `auth()` and `currentUser()` from `@clerk/nextjs/server`
-  - *Source: [Clerk Next.js App Quickstart](https://context7.com/clerk/clerk-nextjs-app-quickstart/llms.txt)*
+  - _Source: [Clerk Next.js App Quickstart](https://context7.com/clerk/clerk-nextjs-app-quickstart/llms.txt)_
 - **Admin allowlist** can be implemented via:
   - Clerk session claims (custom `metadata.role`) checked in middleware
   - OR a simple environment variable allowlist (e.g., `ADMIN_EMAILS`) checked server-side
-  - *Source: [Clerk Next.js App Quickstart - middleware.ts example](https://context7.com/clerk/clerk-nextjs-app-quickstart/llms.txt)*
+  - _Source: [Clerk Next.js App Quickstart - middleware.ts example](https://context7.com/clerk/clerk-nextjs-app-quickstart/llms.txt)_
 - **ClerkProvider** wraps the app in root layout; use `cssLayerName: 'clerk'` for Tailwind 4 compatibility
-  - *Source: [Clerk Next.js App Quickstart](https://context7.com/clerk/clerk-nextjs-app-quickstart/llms.txt)*
+  - _Source: [Clerk Next.js App Quickstart](https://context7.com/clerk/clerk-nextjs-app-quickstart/llms.txt)_
 
 ### 2. Vercel Postgres + Next.js
 
 - Vercel Postgres is now provided via **Marketplace integrations** (Neon is the primary provider)
-  - *Source: [Vercel Docs - Connecting to the Marketplace](https://vercel.com/docs/llms-full)*
+  - _Source: [Vercel Docs - Connecting to the Marketplace](https://vercel.com/docs/llms-full)_
 - Environment variables are **auto-injected** when you add a Postgres integration to your Vercel project
 - For local dev: use `vercel link` + `vercel env pull` to populate `.env.local`
-  - *Source: [Vercel Docs - Local Development Environment Setup](https://vercel.com/docs/deployments/local-env)*
+  - _Source: [Vercel Docs - Local Development Environment Setup](https://vercel.com/docs/deployments/local-env)_
 
 ### 3. Drizzle + Postgres + Next.js App Router
 
 - **Drizzle with Vercel Postgres** uses `drizzle-orm/vercel-postgres` driver - minimal setup
-  - *Source: [Drizzle ORM Docs](https://github.com/drizzle-team/drizzle-orm-docs/blob/main/src/content/docs/tutorials/drizzle-with-db/drizzle-with-vercel.mdx)*
+  - _Source: [Drizzle ORM Docs](https://github.com/drizzle-team/drizzle-orm-docs/blob/main/src/content/docs/tutorials/drizzle-with-db/drizzle-with-vercel.mdx)_
 - **Schema file**: define tables with `pgTable` from `drizzle-orm/pg-core`
-  - *Source: [Drizzle ORM Docs](https://github.com/drizzle-team/drizzle-orm-docs/blob/main/src/content/docs/tutorials/drizzle-with-db/drizzle-with-neon.mdx)*
+  - _Source: [Drizzle ORM Docs](https://github.com/drizzle-team/drizzle-orm-docs/blob/main/src/content/docs/tutorials/drizzle-with-db/drizzle-with-neon.mdx)_
 - **Migrations**: use `drizzle-kit generate` then `drizzle-kit migrate`, OR use `drizzle-kit push` for rapid local iteration
-  - *Source: [Drizzle ORM Docs - Migrations](https://github.com/drizzle-team/drizzle-orm-docs/blob/main/src/content/docs/migrations.mdx)*
+  - _Source: [Drizzle ORM Docs - Migrations](https://github.com/drizzle-team/drizzle-orm-docs/blob/main/src/content/docs/migrations.mdx)_
 - **Config file**: `drizzle.config.ts` with `defineConfig({ dialect: 'postgresql', schema, out, dbCredentials })`
-  - *Source: [Drizzle ORM Docs](https://context7.com/drizzle-team/drizzle-orm-docs/llms.txt)*
+  - _Source: [Drizzle ORM Docs](https://context7.com/drizzle-team/drizzle-orm-docs/llms.txt)_
 
 ### 4. Server Actions (Next.js)
 
 - Use `'use server'` directive at top of action files
 - For form handling, use React's `useActionState` hook in client components
-  - *Source: [Next.js Docs - Forms Guide](https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/forms.mdx)*
+  - _Source: [Next.js Docs - Forms Guide](https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/forms.mdx)_
 - **Revalidation**: call `revalidatePath('/path')` or `revalidateTag('tag')` after mutations
-  - *Source: [Next.js Docs - Updating Data](https://github.com/vercel/next.js/blob/canary/docs/01-app/01-getting-started/08-updating-data.mdx)*
+  - _Source: [Next.js Docs - Updating Data](https://github.com/vercel/next.js/blob/canary/docs/01-app/01-getting-started/08-updating-data.mdx)_
 - Return structured state objects for error handling (not throwing)
-  - *Source: [Next.js Docs - Error Handling](https://github.com/vercel/next.js/blob/canary/docs/01-app/01-getting-started/10-error-handling.mdx)*
+  - _Source: [Next.js Docs - Error Handling](https://github.com/vercel/next.js/blob/canary/docs/01-app/01-getting-started/10-error-handling.mdx)_
 
 ### 5. Tailwind + Simple UI
 
 - Use `@tailwindcss/forms` plugin for form reset/base styles
 - Standard utility classes: `rounded-md`, `border-gray-300`, `focus:ring-indigo-500`, etc.
-  - *Source: [Tailwind CSS Forms Plugin](https://context7.com/tailwindlabs/tailwindcss-forms/llms.txt)*
+  - _Source: [Tailwind CSS Forms Plugin](https://context7.com/tailwindlabs/tailwindcss-forms/llms.txt)_
 
 ---
 
@@ -99,6 +99,7 @@ ADMIN_EMAILS=admin@example.com,leader@uiowa.edu
 ```
 
 **Vercel Dashboard Setup:**
+
 1. Add same env vars in Vercel project settings
 2. For Postgres: Add a Postgres integration from Vercel Marketplace (Neon)
 3. Env vars will auto-populate for `POSTGRES_URL`
@@ -107,59 +108,66 @@ ADMIN_EMAILS=admin@example.com,leader@uiowa.edu
 
 **Tables needed:**
 
-| Table | Purpose |
-|-------|---------|
-| `meeting` | Single row for "next meeting" info |
-| `tutorials` | YouTube tutorial links |
-| `projects` | Project links |
-| `board_members` | Executive board members |
+| Table           | Purpose                            |
+| --------------- | ---------------------------------- |
+| `meeting`       | Single row for "next meeting" info |
+| `tutorials`     | YouTube tutorial links             |
+| `projects`      | Project links                      |
+| `board_members` | Executive board members            |
 
 **Drizzle Schema Code** (`src/db/schema.ts`):
 
 ```typescript
-import { pgTable, serial, text, timestamp, integer, boolean } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  integer,
+  boolean,
+} from "drizzle-orm/pg-core";
 
 // Single-row table for meeting info
-export const meeting = pgTable('meeting', {
-  id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  datetime: timestamp('datetime').notNull(),
-  location: text('location').notNull(),
-  details: text('details'),
-  rsvpLink: text('rsvp_link'),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+export const meeting = pgTable("meeting", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  datetime: timestamp("datetime").notNull(),
+  location: text("location").notNull(),
+  details: text("details"),
+  rsvpLink: text("rsvp_link"),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export const tutorials = pgTable('tutorials', {
-  id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  url: text('url').notNull(),
-  category: text('category').notNull(), // e.g., "Python", "Machine Learning"
-  sortOrder: integer('sort_order').notNull().default(0),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
+export const tutorials = pgTable("tutorials", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  url: text("url").notNull(),
+  category: text("category").notNull(), // e.g., "Python", "Machine Learning"
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-export const projects = pgTable('projects', {
-  id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  description: text('description'),
-  githubUrl: text('github_url'),
-  demoUrl: text('demo_url'),
-  category: text('category').notNull(),
-  sortOrder: integer('sort_order').notNull().default(0),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
+export const projects = pgTable("projects", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description"),
+  githubUrl: text("github_url"),
+  demoUrl: text("demo_url"),
+  category: text("category").notNull(),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-export const boardMembers = pgTable('board_members', {
-  id: serial('id').primaryKey(),
-  name: text('name').notNull(),
-  role: text('role').notNull(), // e.g., "President", "VP"
-  bio: text('bio'),
-  photoUrl: text('photo_url'),
-  linkedinUrl: text('linkedin_url'),
-  githubUrl: text('github_url'),
-  sortOrder: integer('sort_order').notNull().default(0),
-  isActive: boolean('is_active').notNull().default(true),
+export const boardMembers = pgTable("board_members", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  role: text("role").notNull(), // e.g., "President", "VP"
+  bio: text("bio"),
+  photoUrl: text("photo_url"),
+  linkedinUrl: text("linkedin_url"),
+  githubUrl: text("github_url"),
+  sortOrder: integer("sort_order").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
 });
 
 // Type exports for use in Server Actions
@@ -176,12 +184,12 @@ export type InsertBoardMember = typeof boardMembers.$inferInsert;
 **Drizzle Config** (`drizzle.config.ts`):
 
 ```typescript
-import { defineConfig } from 'drizzle-kit';
+import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
-  dialect: 'postgresql',
-  schema: './src/db/schema.ts',
-  out: './drizzle',
+  dialect: "postgresql",
+  schema: "./src/db/schema.ts",
+  out: "./drizzle",
   dbCredentials: {
     url: process.env.POSTGRES_URL!,
   },
@@ -191,8 +199,8 @@ export default defineConfig({
 **DB Client** (`src/db/index.ts`):
 
 ```typescript
-import { drizzle } from 'drizzle-orm/vercel-postgres';
-import * as schema from './schema';
+import { drizzle } from "drizzle-orm/vercel-postgres";
+import * as schema from "./schema";
 
 export const db = drizzle({ schema });
 ```
@@ -212,19 +220,20 @@ npx drizzle-kit push
 
 ### Step 4: Routing Map
 
-| Route | Type | Description |
-|-------|------|-------------|
-| `/` | Public | Home page with club intro + next meeting card |
-| `/tutorials` | Public | List of tutorial links by category |
-| `/projects` | Public | List of project links by category |
-| `/board` | Public | Executive board member cards |
-| `/admin` | Protected | Admin dashboard (requires auth + admin role) |
-| `/sign-in` | Public | Clerk sign-in page |
-| `/sign-up` | Public | Clerk sign-up page |
+| Route        | Type      | Description                                   |
+| ------------ | --------- | --------------------------------------------- |
+| `/`          | Public    | Home page with club intro + next meeting card |
+| `/tutorials` | Public    | List of tutorial links by category            |
+| `/projects`  | Public    | List of project links by category             |
+| `/board`     | Public    | Executive board member cards                  |
+| `/admin`     | Protected | Admin dashboard (requires auth + admin role)  |
+| `/sign-in`   | Public    | Clerk sign-in page                            |
+| `/sign-up`   | Public    | Clerk sign-up page                            |
 
 ### Step 5: Admin UI Sections & Server Actions
 
 **Admin Dashboard Layout:**
+
 - Tabs or sections: Meeting | Tutorials | Projects | Board Members
 - Each section has: View list → Add/Edit forms → Delete/Reorder controls
 
@@ -232,29 +241,46 @@ npx drizzle-kit push
 
 ```typescript
 // src/app/actions/meeting.ts
-'use server'
-export async function updateMeeting(formData: FormData): Promise<ActionResult>
+"use server";
+export async function updateMeeting(formData: FormData): Promise<ActionResult>;
 
 // src/app/actions/tutorials.ts
-'use server'
-export async function createTutorial(formData: FormData): Promise<ActionResult>
-export async function updateTutorial(id: number, formData: FormData): Promise<ActionResult>
-export async function deleteTutorial(id: number): Promise<ActionResult>
-export async function reorderTutorials(orderedIds: number[]): Promise<ActionResult>
+("use server");
+export async function createTutorial(formData: FormData): Promise<ActionResult>;
+export async function updateTutorial(
+  id: number,
+  formData: FormData
+): Promise<ActionResult>;
+export async function deleteTutorial(id: number): Promise<ActionResult>;
+export async function reorderTutorials(
+  orderedIds: number[]
+): Promise<ActionResult>;
 
 // src/app/actions/projects.ts
-'use server'
-export async function createProject(formData: FormData): Promise<ActionResult>
-export async function updateProject(id: number, formData: FormData): Promise<ActionResult>
-export async function deleteProject(id: number): Promise<ActionResult>
-export async function reorderProjects(orderedIds: number[]): Promise<ActionResult>
+("use server");
+export async function createProject(formData: FormData): Promise<ActionResult>;
+export async function updateProject(
+  id: number,
+  formData: FormData
+): Promise<ActionResult>;
+export async function deleteProject(id: number): Promise<ActionResult>;
+export async function reorderProjects(
+  orderedIds: number[]
+): Promise<ActionResult>;
 
 // src/app/actions/board.ts
-'use server'
-export async function createBoardMember(formData: FormData): Promise<ActionResult>
-export async function updateBoardMember(id: number, formData: FormData): Promise<ActionResult>
-export async function deleteBoardMember(id: number): Promise<ActionResult>
-export async function reorderBoardMembers(orderedIds: number[]): Promise<ActionResult>
+("use server");
+export async function createBoardMember(
+  formData: FormData
+): Promise<ActionResult>;
+export async function updateBoardMember(
+  id: number,
+  formData: FormData
+): Promise<ActionResult>;
+export async function deleteBoardMember(id: number): Promise<ActionResult>;
+export async function reorderBoardMembers(
+  orderedIds: number[]
+): Promise<ActionResult>;
 ```
 
 **ActionResult type:**
@@ -272,44 +298,44 @@ type ActionResult = {
 **1. Middleware (route-level protection)** (`middleware.ts`):
 
 ```typescript
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 const isPublicRoute = createRouteMatcher([
-  '/',
-  '/tutorials',
-  '/projects',
-  '/board',
-  '/sign-in(.*)',
-  '/sign-up(.*)',
+  "/",
+  "/tutorials",
+  "/projects",
+  "/board",
+  "/sign-in(.*)",
+  "/sign-up(.*)",
 ]);
 
-const isAdminRoute = createRouteMatcher(['/admin(.*)']);
+const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
 export default clerkMiddleware(async (auth, request) => {
   if (isAdminRoute(request)) {
     const { userId } = await auth();
-    
+
     if (!userId) {
-      const signInUrl = new URL('/sign-in', request.url);
-      signInUrl.searchParams.set('redirect_url', request.url);
+      const signInUrl = new URL("/sign-in", request.url);
+      signInUrl.searchParams.set("redirect_url", request.url);
       return NextResponse.redirect(signInUrl);
     }
-    
+
     // Additional admin check happens in the page/action (see below)
   }
-  
+
   if (!isPublicRoute(request)) {
     await auth.protect();
   }
-  
+
   return NextResponse.next();
 });
 
 export const config = {
   matcher: [
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    '/(api|trpc)(.*)',
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/(api|trpc)(.*)",
   ],
 };
 ```
@@ -318,23 +344,25 @@ export const config = {
 
 ```typescript
 // src/lib/auth.ts
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { auth, currentUser } from "@clerk/nextjs/server";
 
-const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase());
+const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || "")
+  .split(",")
+  .map((e) => e.trim().toLowerCase());
 
 export async function requireAdmin() {
   const { userId } = await auth();
   if (!userId) {
-    throw new Error('Unauthorized');
+    throw new Error("Unauthorized");
   }
-  
+
   const user = await currentUser();
   const email = user?.emailAddresses[0]?.emailAddress?.toLowerCase();
-  
+
   if (!email || !ADMIN_EMAILS.includes(email)) {
-    throw new Error('Forbidden: Admin access required');
+    throw new Error("Forbidden: Admin access required");
   }
-  
+
   return user;
 }
 
@@ -352,25 +380,25 @@ export async function isAdmin(): Promise<boolean> {
 
 ```typescript
 // src/app/actions/tutorials.ts
-'use server'
+"use server";
 
-import { requireAdmin } from '@/lib/auth';
-import { db } from '@/db';
-import { tutorials } from '@/db/schema';
-import { revalidatePath } from 'next/cache';
+import { requireAdmin } from "@/lib/auth";
+import { db } from "@/db";
+import { tutorials } from "@/db/schema";
+import { revalidatePath } from "next/cache";
 
 export async function createTutorial(formData: FormData) {
   await requireAdmin(); // Throws if not admin
-  
-  const title = formData.get('title') as string;
-  const url = formData.get('url') as string;
-  const category = formData.get('category') as string;
-  
+
+  const title = formData.get("title") as string;
+  const url = formData.get("url") as string;
+  const category = formData.get("category") as string;
+
   await db.insert(tutorials).values({ title, url, category });
-  
-  revalidatePath('/tutorials');
-  revalidatePath('/admin');
-  
+
+  revalidatePath("/tutorials");
+  revalidatePath("/admin");
+
   return { success: true };
 }
 ```
@@ -381,8 +409,8 @@ export async function createTutorial(formData: FormData) {
 
 ```typescript
 // After any CRUD operation:
-revalidatePath('/tutorials');  // Revalidate public page
-revalidatePath('/admin');       // Revalidate admin page
+revalidatePath("/tutorials"); // Revalidate public page
+revalidatePath("/admin"); // Revalidate admin page
 ```
 
 **Public pages** fetch data directly in Server Components (no caching config needed for dynamic DB reads):
@@ -395,7 +423,7 @@ import { asc } from 'drizzle-orm';
 
 export default async function TutorialsPage() {
   const items = await db.select().from(tutorials).orderBy(asc(tutorials.sortOrder));
-  
+
   return (
     <main>
       {/* Render tutorials */}
@@ -405,6 +433,7 @@ export default async function TutorialsPage() {
 ```
 
 This ensures:
+
 - Public pages always show fresh data after admin edits
 - No manual cache busting needed
 - No redeploy required for content updates
@@ -512,6 +541,7 @@ applied-ai-web/
 ### MVP (1-2 Sessions)
 
 **Session 1: Foundation**
+
 - [ ] Create Next.js project with all dependencies
 - [ ] Set up Clerk (layout, middleware, sign-in/sign-up pages)
 - [ ] Set up Drizzle schema and run initial migration
@@ -519,6 +549,7 @@ applied-ai-web/
 - [ ] Fetch and display data on public pages (even if seeded manually)
 
 **Session 2: Admin CRUD**
+
 - [ ] Create admin page with auth check
 - [ ] Implement Meeting update form + action
 - [ ] Implement Tutorials CRUD (add/edit/delete)
@@ -544,6 +575,7 @@ applied-ai-web/
 ## Summary
 
 This plan uses the current best-practice patterns from:
+
 - **Clerk**: Middleware-based route protection + server-side admin allowlist
 - **Next.js App Router**: Server Components for data fetching, Server Actions for mutations
 - **Drizzle ORM**: Type-safe schema with `drizzle-kit` migrations

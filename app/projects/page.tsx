@@ -1,56 +1,64 @@
-import Header from '@/components/Header';
-import { db } from '@/db';
-import { projects } from '@/db/schema';
-import { asc } from 'drizzle-orm';
+import Header from "@/components/Header";
+import { db } from "@/db";
+import { projects } from "@/db/schema";
+import { asc } from "drizzle-orm";
 
 export default async function ProjectsPage() {
-  const projectList = await db.select().from(projects).orderBy(asc(projects.sortOrder));
-  
+  const projectList = await db
+    .select()
+    .from(projects)
+    .orderBy(asc(projects.sortOrder));
+
   // Group projects by category
-  const projectsByCategory = projectList.reduce((acc, project) => {
-    if (!acc[project.category]) {
-      acc[project.category] = [];
-    }
-    acc[project.category].push(project);
-    return acc;
-  }, {} as Record<string, typeof projectList>);
-  
+  const projectsByCategory = projectList.reduce(
+    (acc, project) => {
+      if (!acc[project.category]) {
+        acc[project.category] = [];
+      }
+      acc[project.category].push(project);
+      return acc;
+    },
+    {} as Record<string, typeof projectList>
+  );
+
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <main className="min-h-screen bg-gray-900">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-              Projects
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
+            <h1 className="mb-4 text-4xl font-bold text-gray-100">Projects</h1>
+            <p className="text-xl text-gray-400">
               Explore projects from our members and the community
             </p>
           </div>
-          
+
           {Object.keys(projectsByCategory).length === 0 ? (
-            <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow text-center">
-              <p className="text-gray-600 dark:text-gray-400">No projects available yet. Check back soon!</p>
+            <div className="rounded-lg bg-gray-800 p-6 text-center shadow">
+              <p className="text-gray-400">
+                No projects available yet. Check back soon!
+              </p>
             </div>
           ) : (
             <div className="space-y-8">
               {Object.entries(projectsByCategory).map(([category, items]) => (
                 <div key={category}>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                  <h2 className="mb-4 text-2xl font-bold text-gray-100">
                     {category}
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     {items.map((project) => (
                       <div
                         key={project.id}
-                        className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow hover:shadow-lg transition-shadow"
+                        className="rounded-lg bg-gray-800 p-6 shadow transition-shadow hover:shadow-lg"
                       >
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                        <h3 className="mb-2 text-lg font-semibold text-gray-100">
                           {project.title}
                         </h3>
                         {project.description && (
-                          <p className="text-gray-600 dark:text-gray-400 mb-4">{project.description}</p>
+                          <p className="mb-4 text-gray-400">
+                            {project.description}
+                          </p>
                         )}
                         <div className="flex gap-4">
                           {project.githubUrl && (
@@ -58,10 +66,18 @@ export default async function ProjectsPage() {
                               href={project.githubUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                              className="inline-flex items-center text-sm font-medium text-gray-300 hover:text-gray-100"
                             >
-                              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                              <svg
+                                className="mr-1 h-4 w-4"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                                  clipRule="evenodd"
+                                />
                               </svg>
                               GitHub
                             </a>
@@ -71,10 +87,20 @@ export default async function ProjectsPage() {
                               href={project.demoUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
+                              className="inline-flex items-center text-sm font-medium text-indigo-400 hover:text-indigo-300"
                             >
-                              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              <svg
+                                className="mr-1 h-4 w-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
                               </svg>
                               Live Demo
                             </a>
