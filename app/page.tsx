@@ -10,69 +10,24 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-900">
+      <main className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+
+          {/* Hero */}
           <div className="mb-12">
-            <h1 className="mb-4 text-4xl font-bold text-gray-100">
+            <h1 className="mb-4 text-4xl font-bold bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
               Welcome to Applied AI
             </h1>
-            <p className="text-xl text-gray-400">
+            <p className="text-xl text-gray-300">
               University of Iowa&apos;s student organization for applied
               artificial intelligence and machine learning
             </p>
           </div>
 
+          {/* Meeting Card */}
           <div className="mb-12">
             <MeetingCard meeting={nextMeeting} />
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <div className="rounded-lg bg-gray-800 p-6 shadow">
-              <h3 className="mb-2 text-lg font-semibold text-gray-100">
-                Learn
-              </h3>
-              <p className="mb-4 text-gray-400">
-                Access our curated collection of tutorials and learning
-                resources.
-              </p>
-              <a
-                href="/tutorials"
-                className="font-medium text-indigo-400 hover:text-indigo-300"
-              >
-                Browse Tutorials →
-              </a>
-            </div>
-
-            <div className="rounded-lg bg-gray-800 p-6 shadow">
-              <h3 className="mb-2 text-lg font-semibold text-gray-100">
-                Projects
-              </h3>
-              <p className="mb-4 text-gray-400">
-                Explore projects created by our members and the community.
-              </p>
-              <a
-                href="/projects"
-                className="font-medium text-indigo-400 hover:text-indigo-300"
-              >
-                View Projects →
-              </a>
-            </div>
-
-            <div className="rounded-lg bg-gray-800 p-6 shadow">
-              <h3 className="mb-2 text-lg font-semibold text-gray-100">Team</h3>
-              <p className="mb-4 text-gray-400">
-                Meet the executive board members leading our organization.
-              </p>
-              <a
-                href="/board"
-                className="font-medium text-indigo-400 hover:text-indigo-300"
-              >
-                Meet the Team →
-              </a>
-            </div>
-          </div>
-        </div>
-      </main>
-    </>
-  );
-}
+          {/* Feature Cards */}
+          <div className="
