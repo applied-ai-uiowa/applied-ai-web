@@ -1,21 +1,21 @@
 import Header from "@/components/Header";
 import MeetingCard from "@/components/MeetingCard";
+import Footer from "@/components/Footer";
 import { db } from "@/db";
-import { meeting } from "@/db/schema";
+import { meeting, boardMembers } from "@/db/schema";
+import { asc, eq } from "drizzle-orm";
 import Link from "next/link";
-
-type Episode = {
-  num: string;
-  title: string;
-  minutes: string;
-  tag: string;
-  desc: string;
-  url?: string;
-};
+import Image from "next/image";
 
 export default async function Home() {
   const meetings = await db.select().from(meeting).limit(1);
   const nextMeeting = meetings[0] || null;
+
+  const members = await db
+    .select()
+    .from(boardMembers)
+    .where(eq(boardMembers.isActive, true))
+    .orderBy(asc(boardMembers.sortOrder));
 
   const features = [
     {
@@ -33,131 +33,11 @@ export default async function Home() {
       cta: "View projects",
     },
     {
-      title: "Executive Board",
-      description:
-        "Meet the team behind Applied AI and learn how to get involved.",
-      href: "/board",
-      cta: "Meet the board",
+      title: "Podcast Episodes",
+      description: "Short, practical episodes you can follow along with.",
+      href: "/episodes",
+      cta: "Listen now",
     },
-  ];
-
-  const workshops = [
-    {
-      title: "Resume Feedback Bot",
-      level: "Beginner",
-      time: "60–90 min",
-      tools: "ChatGPT + Zapier",
-      desc: "Form intake → AI scoring → feedback email.",
-      href: "/tutorials",
-    },
-    {
-      title: "Job Application Tracker",
-      level: "Beginner",
-      time: "45–60 min",
-      tools: "Google Sheets + GPT",
-      desc: "Track roles, auto-summarize job posts, and generate follow-ups.",
-      href: "/tutorials",
-    },
-    {
-      title: "Customer Feedback Analyzer",
-      level: "Intermediate",
-      time: "90 min",
-      tools: "Python + GPT",
-      desc: "Cluster feedback, extract themes, and generate action items.",
-      href: "/tutorials",
-    },
-    {
-      title: "Outreach Email Generator",
-      level: "Beginner",
-      time: "30–45 min",
-      tools: "ChatGPT",
-      desc: "Generate personalized networking outreach in your voice.",
-      href: "/tutorials",
-    },
-  ];
-
-  const episodes: Episode[] = [
-    {
-      num: "01",
-      title: "Prompting for Reliable Outputs",
-      minutes: "8 min",
-      tag: "Prompting",
-      desc: "Turn vague prompts into consistent, structured results.",
-      url: "https://creators.spotify.com/pod/profile/maheeshah/episodes/Prompting-for-Reliable-Outputs-e3e9c62/a-acej63j",
-    },
-    {
-      num: "02",
-      title: "From Form → GPT → Email",
-      minutes: "22 min",
-      tag: "Automation",
-      desc: "Build a workflow that sends feedback automatically.",
-    },
-    {
-      num: "03",
-      title: "Evaluating & Iterating Rubrics",
-      minutes: "15 min",
-      tag: "Testing",
-      desc: "Improve quality with rubrics, examples, and quick eval loops.",
-    },
-    {
-      num: "04",
-      title: "Packaging Your Project for GitHub",
-      minutes: "12 min",
-      tag: "Portfolio",
-      desc: "Make it resume-ready with a README + demo.",
-    },
-    {
-      num: "05",
-      title: "Using Copilot in Excel",
-      minutes: "16 min",
-      tag: "Copilot",
-      desc: "Speed up analysis, formulas, and summaries in spreadsheets.",
-    },
-    {
-      num: "06",
-      title: "Building a Simple n8n Workflow",
-      minutes: "20 min",
-      tag: "n8n",
-      desc: "Automate multi-step tasks without building a full backend.",
-    },
-  ];
-
-  const tools = [
-    { name: "ChatGPT", desc: "Prompting, drafts, analysis" },
-    { name: "Microsoft Copilot", desc: "Docs & Excel help" },
-    { name: "Zapier", desc: "No-code automation" },
-    { name: "n8n", desc: "Workflow automation" },
-    { name: "Notion AI", desc: "Notes + knowledge base" },
-    { name: "Perplexity", desc: "Research" },
-    { name: "Canva", desc: "Slides + assets" },
-    { name: "GitHub", desc: "Portfolio hosting" },
-  ];
-
-  const faqs: Array<[string, string]> = [
-    [
-      "Do I need coding experience?",
-      "No. Many workshops are beginner-friendly and focus on tools first.",
-    ],
-    [
-      "How do workshops work?",
-      "Watch a short episode, follow along, then bring questions to meetings/office hours.",
-    ],
-    [
-      "What do I put on my resume?",
-      "Your deliverable, the tools used, and the impact. We provide a resume bullet template.",
-    ],
-    [
-      "Can I join mid-semester?",
-      "Yes — workshops are designed to be modular so you can jump in anytime.",
-    ],
-    [
-      "How do I get help?",
-      "Use the question form and bring issues to weekly help time at meetings.",
-    ],
-    [
-      "What tools do I need?",
-      "A laptop + free accounts for common tools (ChatGPT, GitHub, etc.).",
-    ],
   ];
 
   return (
@@ -171,24 +51,9 @@ export default async function Home() {
               Welcome to Applied AI
             </h1>
             <p className="max-w-3xl text-xl leading-relaxed text-gray-200">
-              University of Iowa&apos;s student organization for applied artificial
-              intelligence and machine learning.
+              University of Iowa&apos;s student organization for applied
+              artificial intelligence and machine learning.
             </p>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-                href="/tutorials"
-                className="inline-flex items-center justify-center rounded-xl bg-yellow-400 px-5 py-3 text-sm font-semibold text-black transition hover:bg-yellow-300"
-              >
-                Explore tutorials
-              </Link>
-              <Link
-                href="/projects"
-                className="inline-flex items-center justify-center rounded-xl border border-yellow-500/30 bg-black/40 px-5 py-3 text-sm font-semibold text-yellow-200 transition hover:border-yellow-400/60 hover:bg-black/60"
-              >
-                See projects
-              </Link>
-            </div>
           </div>
 
           {/* Meeting Card */}
@@ -212,7 +77,10 @@ export default async function Home() {
                 </p>
                 <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-yellow-200 transition group-hover:text-yellow-100">
                   {f.cta}
-                  <span aria-hidden className="transition group-hover:translate-x-0.5">
+                  <span
+                    aria-hidden
+                    className="transition group-hover:translate-x-0.5"
+                  >
                     →
                   </span>
                 </div>
@@ -220,266 +88,109 @@ export default async function Home() {
             ))}
           </div>
 
-          {/* Applied AI Studio Sections */}
-          <div className="mt-16 space-y-16">
-            {/* Workshops */}
-            <section id="workshops" className="scroll-mt-24">
-              <div className="mb-6">
-                <h2 className="text-3xl font-bold text-yellow-300">
-                  Applied AI Studio Workshops
-                </h2>
-                <p className="mt-2 text-gray-200">
-                  Pick a workshop and build something you can demo — beginner-friendly
-                  and resume-ready.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                {workshops.map((w) => (
-                  <div
-                    key={w.title}
-                    className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30"
-                  >
-                    <div className="mb-2 flex flex-wrap items-center gap-2">
-                      <span className="rounded-full border border-yellow-500/30 bg-yellow-400/10 px-3 py-1 text-xs font-medium text-yellow-200">
-                        {w.level}
-                      </span>
-                      <span className="text-sm text-gray-300">• {w.time}</span>
-                      <span className="text-sm text-gray-300">• {w.tools}</span>
-                    </div>
-
-                    <h3 className="text-lg font-semibold text-yellow-200">
-                      {w.title}
-                    </h3>
-                    <p className="mt-2 text-gray-200">{w.desc}</p>
-
-                    <Link
-                      href={w.href}
-                      className="mt-4 inline-block font-medium text-yellow-300 hover:text-yellow-200"
-                    >
-                      Start Workshop →
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Podcast Episodes */}
-            <section id="episodes" className="scroll-mt-24">
-              <div className="mb-6">
-                <h2 className="text-3xl font-bold text-yellow-300">
-                  Podcast Episodes
-                </h2>
-                <p className="mt-2 text-gray-200">
-                  Short, practical episodes you can follow along with.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {episodes.map((e) => (
-                  <div
-                    key={e.num}
-                    className="flex items-start gap-4 rounded-2xl border border-yellow-500/20 bg-black/40 p-5 shadow-lg shadow-black/20"
-                  >
-                    {e.url ? (
-                      <a
-                        href={e.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-yellow-500/30 text-yellow-200 hover:bg-yellow-400/10 transition"
-                        aria-label={`Listen to episode ${e.num}`}
-                      >
-                        ▶
-                      </a>
-                    ) : (
-                      <div
-                        className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-yellow-500/20 text-yellow-200/50"
-                        aria-hidden
-                        title="Coming soon"
-                      >
-                        ▶
-                      </div>
-                    )}
-
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-sm font-medium text-yellow-200">
-                          Ep {e.num}
-                        </span>
-                        <span className="text-sm text-gray-300">• {e.minutes}</span>
-                        <span className="rounded-full border border-yellow-500/30 bg-yellow-400/10 px-2 py-0.5 text-xs text-yellow-200">
-                          {e.tag}
-                        </span>
-                      </div>
-
-                      <div className="mt-1 text-lg font-semibold text-gray-100">
-                        {e.title}
-                      </div>
-                      <p className="mt-1 text-gray-200">{e.desc}</p>
-                    </div>
-
-                    {e.url ? (
-                      <a
-                        href={e.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm font-medium text-yellow-300 hover:text-yellow-200"
-                      >
-                        Listen
-                      </a>
-                    ) : (
-                      <span className="text-sm font-medium text-gray-400">
-                        Soon
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* ✅ TOOLS (re-added) */}
-            <section id="tools" className="scroll-mt-24">
-              <div className="mb-6">
-                <h2 className="text-3xl font-bold text-yellow-300">
-                  AI Tools & Resources
-                </h2>
-                <p className="mt-2 text-gray-200">
-                  Quick guides to the tools students actually use.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                {tools.map((t) => (
-                  <div
-                    key={t.name}
-                    className="rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/20"
-                  >
-                    <div className="font-semibold text-gray-100">{t.name}</div>
-                    <div className="mt-1 text-sm text-gray-200">{t.desc}</div>
-                    <Link
-                      href="/tutorials"
-                      className="mt-3 inline-block text-sm font-medium text-yellow-300 hover:text-yellow-200"
-                    >
-                      Guide →
-                    </Link>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 text-sm text-gray-200">
-                Toolkits:{" "}
-                <Link className="text-yellow-300 hover:underline" href="/tutorials">
-                  Prompt Library
-                </Link>
-                {" • "}
-                <Link className="text-yellow-300 hover:underline" href="/tutorials">
-                  Templates
-                </Link>
-                {" • "}
-                <Link className="text-yellow-300 hover:underline" href="/tutorials">
-                  Starter Repos
-                </Link>
-              </div>
-            </section>
-
-            {/* ✅ CONTACT (re-added) */}
+          {/* Contact Section with Board Members */}
+          <div className="mt-16">
             <section id="contact" className="scroll-mt-24">
               <div className="mb-6">
                 <h2 className="text-3xl font-bold text-yellow-300">
-                  Questions & Contact
+                  Contact Us
                 </h2>
                 <p className="mt-2 text-gray-200">
-                  Ask anything about workshops, tools, or projects — we’ll get back
-                  to you.
+                  Get in touch with the Applied AI team.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                {/* FAQ */}
+                {/* Board Members */}
                 <div className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30">
                   <h3 className="mb-4 text-lg font-semibold text-yellow-200">
-                    FAQ
+                    Executive Board
                   </h3>
 
-                  <div className="space-y-3 text-gray-200">
-                    {faqs.map(([q, a]) => (
-                      <div
-                        key={q}
-                        className="rounded-xl border border-yellow-500/20 bg-black/30 p-4"
-                      >
-                        <div className="font-medium text-gray-100">{q}</div>
-                        <div className="mt-1 text-sm text-gray-200">{a}</div>
-                      </div>
-                    ))}
-                  </div>
+                  {members.length === 0 ? (
+                    <p className="text-gray-200">
+                      Board information coming soon.
+                    </p>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                      {members.map((member) => (
+                        <div key={member.id} className="text-center">
+                          {member.photoUrl ? (
+                            <Image
+                              src={member.photoUrl}
+                              alt={member.name}
+                              width={64}
+                              height={64}
+                              className="mx-auto mb-2 h-16 w-16 rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-full border border-yellow-500/30 bg-yellow-400/10">
+                              <span className="text-lg font-bold text-yellow-200">
+                                {member.name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </span>
+                            </div>
+                          )}
+                          <div className="text-sm font-medium text-gray-100">
+                            {member.name}
+                          </div>
+                          <div className="text-xs text-yellow-200/70">
+                            {member.role}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <Link
+                    href="/board"
+                    className="mt-4 inline-block text-sm font-medium text-yellow-300 hover:text-yellow-200"
+                  >
+                    Meet the full team →
+                  </Link>
                 </div>
 
-                {/* Ask a question (visual mock) */}
+                {/* Contact Info */}
                 <div className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30">
                   <h3 className="mb-4 text-lg font-semibold text-yellow-200">
-                    Ask a Question
+                    Get in Touch
                   </h3>
 
-                  <div className="space-y-3">
-                    <input
-                      className="w-full rounded-xl border border-yellow-500/20 bg-black/30 px-4 py-2 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/40"
-                      placeholder="Name"
-                    />
-                    <input
-                      className="w-full rounded-xl border border-yellow-500/20 bg-black/30 px-4 py-2 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/40"
-                      placeholder="Email"
-                    />
-                    <textarea
-                      className="w-full rounded-xl border border-yellow-500/20 bg-black/30 px-4 py-2 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/40"
-                      placeholder="Your question"
-                      rows={4}
-                    />
-                    <button className="w-full rounded-xl bg-yellow-400 px-4 py-2 font-semibold text-black transition hover:bg-yellow-300">
-                      Submit
-                    </button>
-                    <p className="text-xs text-gray-300">
-                      (We can connect this to Google Forms/Formspree or your Neon DB
-                      later — this is a visual mock for now.)
-                    </p>
-                  </div>
-
-                  <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="space-y-4">
                     <div className="rounded-xl border border-yellow-500/20 bg-black/30 p-4">
                       <div className="text-sm text-gray-300">Email</div>
-                      <div className="mt-1 font-medium text-gray-100">
+                      <a
+                        href="mailto:appliedai@uiowa.edu"
+                        className="mt-1 block font-medium text-gray-100 hover:text-yellow-200"
+                      >
                         appliedai@uiowa.edu
-                      </div>
+                      </a>
                     </div>
 
                     <div className="rounded-xl border border-yellow-500/20 bg-black/30 p-4">
-                      <div className="text-sm text-gray-300">Community</div>
+                      <div className="text-sm text-gray-300">Location</div>
                       <div className="mt-1 font-medium text-gray-100">
-                        Discord / Slack
+                        University of Iowa
                       </div>
                       <div className="mt-1 text-sm text-gray-300">
-                        Link coming soon
+                        Iowa City, IA
                       </div>
                     </div>
 
-                    <div className="rounded-xl border border-yellow-500/20 bg-black/30 p-4 sm:col-span-2">
-                      <div className="text-sm text-gray-300">Weekly meeting</div>
-                      <div className="mt-1 font-medium text-gray-100">
-                        Tuesdays 8:00–9:30 AM • Any weekday after 2:30 PM
-                      </div>
-                    </div>
+                    <p className="text-sm text-gray-300">
+                      Want to collaborate, sponsor a workshop, or learn more?
+                      Reach out via email and we&apos;ll get back to you.
+                    </p>
                   </div>
                 </div>
               </div>
             </section>
           </div>
-
-          {/* Footer note */}
-          <div className="mt-12 text-sm text-gray-400">
-            Want to collaborate or sponsor a workshop? Reach out via the contact
-            links in the header.
-          </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

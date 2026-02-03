@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { db } from "@/db";
 import { tutorials } from "@/db/schema";
 import { asc } from "drizzle-orm";
@@ -51,18 +52,20 @@ export default async function TutorialsPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-900">
+      <main className="min-h-screen bg-gradient-to-br from-black via-yellow-950/40 to-black">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <h1 className="mb-4 text-4xl font-bold text-gray-100">Tutorials</h1>
-            <p className="text-xl text-gray-400">
+            <h1 className="mb-4 text-4xl font-bold text-gray-100 text-yellow-400">
+              Tutorials
+            </h1>
+            <p className="text-xl text-gray-200">
               Curated learning resources for AI and machine learning
             </p>
           </div>
 
           {Object.keys(tutorialsByCategory).length === 0 ? (
-            <div className="rounded-lg bg-gray-800 p-6 text-center shadow">
-              <p className="text-gray-400">
+            <div className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 text-center shadow-lg shadow-black/30">
+              <p className="text-gray-200">
                 No tutorials available yet. Check back soon!
               </p>
             </div>
@@ -70,7 +73,7 @@ export default async function TutorialsPage() {
             <div className="space-y-8">
               {Object.entries(tutorialsByCategory).map(([category, items]) => (
                 <div key={category}>
-                  <h2 className="mb-4 text-2xl font-bold text-gray-100">
+                  <h2 className="mb-4 text-2xl font-bold text-yellow-300">
                     {category}
                   </h2>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -82,7 +85,7 @@ export default async function TutorialsPage() {
                           href={tutorial.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="overflow-hidden rounded-lg bg-gray-800 shadow transition-shadow hover:shadow-lg"
+                          className="overflow-hidden rounded-2xl border border-yellow-500/20 bg-black/40 shadow-lg shadow-black/30 transition hover:border-yellow-400/50 hover:bg-black/60"
                         >
                           {thumbnailUrl && (
                             <div className="relative aspect-video w-full">
@@ -100,7 +103,7 @@ export default async function TutorialsPage() {
                               {tutorial.title}
                             </h3>
                             {tutorial.description && (
-                              <p className="text-gray-400">
+                              <p className="text-gray-200">
                                 {tutorial.description}
                               </p>
                             )}
@@ -115,6 +118,7 @@ export default async function TutorialsPage() {
           )}
         </div>
       </main>
+      <Footer />
     </>
   );
 }

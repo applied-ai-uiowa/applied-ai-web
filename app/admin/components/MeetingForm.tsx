@@ -44,7 +44,7 @@ export default function MeetingForm({ initialData }: MeetingFormProps) {
           name="title"
           defaultValue={initialData?.title || ""}
           required
-          className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none"
+          className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 shadow-sm focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
         />
       </div>
 
@@ -71,7 +71,7 @@ export default function MeetingForm({ initialData }: MeetingFormProps) {
               : ""
           }
           required
-          className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none"
+          className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 shadow-sm focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
         />
       </div>
 
@@ -88,7 +88,7 @@ export default function MeetingForm({ initialData }: MeetingFormProps) {
           name="location"
           defaultValue={initialData?.location || ""}
           required
-          className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none"
+          className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 shadow-sm focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
         />
       </div>
 
@@ -104,7 +104,7 @@ export default function MeetingForm({ initialData }: MeetingFormProps) {
           name="details"
           rows={3}
           defaultValue={initialData?.details || ""}
-          className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none"
+          className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 shadow-sm focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
         />
       </div>
 
@@ -120,7 +120,7 @@ export default function MeetingForm({ initialData }: MeetingFormProps) {
           id="rsvpLink"
           name="rsvpLink"
           defaultValue={initialData?.rsvpLink || ""}
-          className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none"
+          className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 shadow-sm focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
         />
       </div>
 
@@ -128,7 +128,7 @@ export default function MeetingForm({ initialData }: MeetingFormProps) {
         <button
           type="submit"
           disabled={loading}
-          className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+          className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-medium text-black hover:bg-yellow-300 disabled:opacity-50"
         >
           {loading ? "Updating..." : "Update Meeting"}
         </button>

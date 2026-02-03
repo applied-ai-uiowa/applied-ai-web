@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { db } from "@/db";
 import { boardMembers } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
@@ -14,20 +15,20 @@ export default async function BoardPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-900">
+      <main className="min-h-screen bg-gradient-to-br from-black via-yellow-950/40 to-black">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <h1 className="mb-4 text-4xl font-bold text-gray-100">
+            <h1 className="mb-4 text-4xl font-bold text-gray-100 text-yellow-400">
               Executive Board
             </h1>
-            <p className="text-xl text-gray-400">
+            <p className="text-xl text-gray-200">
               Meet the team leading Applied AI at the University of Iowa
             </p>
           </div>
 
           {members.length === 0 ? (
-            <div className="rounded-lg bg-gray-800 p-6 text-center shadow">
-              <p className="text-gray-400">
+            <div className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 text-center shadow-lg shadow-black/30">
+              <p className="text-gray-200">
                 No board members to display yet. Check back soon!
               </p>
             </div>
@@ -36,7 +37,7 @@ export default async function BoardPage() {
               {members.map((member) => (
                 <div
                   key={member.id}
-                  className="rounded-lg bg-gray-800 p-6 shadow transition-shadow hover:shadow-lg"
+                  className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30 transition hover:border-yellow-400/50 hover:bg-black/60"
                 >
                   {member.photoUrl && (
                     <Image
@@ -48,8 +49,8 @@ export default async function BoardPage() {
                     />
                   )}
                   {!member.photoUrl && (
-                    <div className="mx-auto mb-4 flex h-32 w-32 items-center justify-center rounded-full bg-indigo-900">
-                      <span className="text-3xl font-bold text-indigo-400">
+                    <div className="mx-auto mb-4 flex h-32 w-32 items-center justify-center rounded-full border border-yellow-500/30 bg-yellow-400/10">
+                      <span className="text-3xl font-bold text-yellow-200">
                         {member.name
                           .split(" ")
                           .map((n) => n[0])
@@ -60,11 +61,11 @@ export default async function BoardPage() {
                   <h3 className="mb-1 text-center text-xl font-semibold text-gray-100">
                     {member.name}
                   </h3>
-                  <p className="mb-3 text-center font-medium text-indigo-400">
+                  <p className="mb-3 text-center font-medium text-yellow-200">
                     {member.role}
                   </p>
                   {member.bio && (
-                    <p className="mb-4 text-center text-sm text-gray-400">
+                    <p className="mb-4 text-center text-sm text-gray-300">
                       {member.bio}
                     </p>
                   )}
@@ -74,7 +75,7 @@ export default async function BoardPage() {
                         href={member.linkedinUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-500 hover:text-gray-300"
+                        className="text-gray-400 hover:text-yellow-200"
                         aria-label="LinkedIn"
                       >
                         <svg
@@ -91,7 +92,7 @@ export default async function BoardPage() {
                         href={member.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-500 hover:text-gray-300"
+                        className="text-gray-400 hover:text-yellow-200"
                         aria-label="GitHub"
                       >
                         <svg
@@ -114,6 +115,7 @@ export default async function BoardPage() {
           )}
         </div>
       </main>
+      <Footer />
     </>
   );
 }

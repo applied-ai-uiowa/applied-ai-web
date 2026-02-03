@@ -62,7 +62,7 @@ export default function ImageUpload({
       <label className="block text-sm font-medium text-gray-300">{label}</label>
 
       {preview && (
-        <div className="relative h-32 w-32 overflow-hidden rounded-lg border border-gray-600">
+        <div className="relative h-32 w-32 overflow-hidden rounded-lg border border-yellow-500/30">
           <Image
             src={preview}
             alt="Preview"
@@ -86,7 +86,7 @@ export default function ImageUpload({
           type="button"
           onClick={handleButtonClick}
           disabled={uploading}
-          className="rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 disabled:opacity-50"
+          className="rounded-md border border-yellow-500/30 bg-black/40 px-3 py-2 text-sm font-medium text-yellow-200 hover:bg-black/60 disabled:opacity-50"
         >
           {uploading
             ? "Uploading..."
