@@ -61,7 +61,7 @@ export default function BoardMembersList({
       <div className="flex items-center justify-between">
         <button
           onClick={() => setShowForm(!showForm)}
-          className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-medium text-black hover:bg-yellow-300"
         >
           {showForm ? "Cancel" : "Add Board Member"}
         </button>
@@ -79,7 +79,7 @@ export default function BoardMembersList({
       {showForm && (
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 rounded-lg border-gray-700 bg-gray-900 p-4"
+          className="space-y-4 rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30"
         >
           <div>
             <label
@@ -93,7 +93,7 @@ export default function BoardMembersList({
               id="name"
               name="name"
               required
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -110,7 +110,7 @@ export default function BoardMembersList({
               name="role"
               required
               placeholder="e.g., President, VP"
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -125,7 +125,7 @@ export default function BoardMembersList({
               id="bio"
               name="bio"
               rows={3}
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -148,7 +148,7 @@ export default function BoardMembersList({
               type="url"
               id="linkedinUrl"
               name="linkedinUrl"
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -163,7 +163,7 @@ export default function BoardMembersList({
               type="url"
               id="githubUrl"
               name="githubUrl"
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -179,7 +179,7 @@ export default function BoardMembersList({
               id="sortOrder"
               name="sortOrder"
               defaultValue={0}
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -190,7 +190,7 @@ export default function BoardMembersList({
               name="isActive"
               value="true"
               defaultChecked
-              className="h-4 w-4 rounded border-gray-600 text-indigo-600 focus:ring-indigo-500"
+              className="h-4 w-4 rounded border-yellow-500/30 text-yellow-400 focus:ring-yellow-400/40"
             />
             <label
               htmlFor="isActive"
@@ -203,7 +203,7 @@ export default function BoardMembersList({
           <button
             type="submit"
             disabled={loading}
-            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+            className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-medium text-black hover:bg-yellow-300 disabled:opacity-50"
           >
             {loading ? "Creating..." : "Create Board Member"}
           </button>
@@ -214,7 +214,7 @@ export default function BoardMembersList({
         {initialMembers.map((member) => (
           <div
             key={member.id}
-            className="flex items-start justify-between rounded-lg border-gray-700 bg-gray-900 p-4"
+            className="flex items-start justify-between rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30"
           >
             <div className="flex gap-4">
               {member.photoUrl && (
@@ -230,9 +230,9 @@ export default function BoardMembersList({
               )}
               <div>
                 <h3 className="font-medium text-gray-100">{member.name}</h3>
-                <p className="text-sm text-indigo-400">{member.role}</p>
+                <p className="text-sm text-yellow-200">{member.role}</p>
                 {member.bio && (
-                  <p className="mt-1 text-sm text-gray-400">{member.bio}</p>
+                  <p className="mt-1 text-sm text-gray-300">{member.bio}</p>
                 )}
                 <div className="mt-2 flex gap-4">
                   {member.linkedinUrl && (
@@ -240,7 +240,7 @@ export default function BoardMembersList({
                       href={member.linkedinUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-gray-400 hover:text-gray-200"
+                      className="text-sm text-gray-400 hover:text-yellow-200"
                     >
                       LinkedIn
                     </a>
@@ -250,13 +250,13 @@ export default function BoardMembersList({
                       href={member.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-gray-400 hover:text-gray-200"
+                      className="text-sm text-gray-400 hover:text-yellow-200"
                     >
                       GitHub
                     </a>
                   )}
                 </div>
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="mt-1 text-xs text-gray-300">
                   Status: {member.isActive ? "Active" : "Inactive"}
                 </p>
               </div>

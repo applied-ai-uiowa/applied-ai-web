@@ -51,7 +51,7 @@ export default function EpisodesList({
       <div className="flex items-center justify-between">
         <button
           onClick={() => setShowForm(!showForm)}
-          className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-medium text-black hover:bg-yellow-300"
         >
           {showForm ? "Cancel" : "Add Episode"}
         </button>
@@ -69,7 +69,7 @@ export default function EpisodesList({
       {showForm && (
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 rounded-lg border-gray-700 bg-gray-900 p-4"
+          className="space-y-4 rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30"
         >
           <div>
             <label
@@ -83,7 +83,7 @@ export default function EpisodesList({
               id="title"
               name="title"
               required
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -98,7 +98,7 @@ export default function EpisodesList({
               id="description"
               name="description"
               rows={3}
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -115,7 +115,7 @@ export default function EpisodesList({
               name="durationMinutes"
               required
               min={1}
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -132,7 +132,7 @@ export default function EpisodesList({
               name="tag"
               required
               placeholder="e.g., Prompting, Automation, Testing"
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -148,7 +148,7 @@ export default function EpisodesList({
               id="spotifyUrl"
               name="spotifyUrl"
               placeholder="https://..."
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -164,14 +164,14 @@ export default function EpisodesList({
               id="sortOrder"
               name="sortOrder"
               defaultValue={0}
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+            className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-medium text-black hover:bg-yellow-300 disabled:opacity-50"
           >
             {loading ? "Creating..." : "Create Episode"}
           </button>
@@ -182,23 +182,23 @@ export default function EpisodesList({
         {initialEpisodes.map((episode, index) => (
           <div
             key={episode.id}
-            className="flex items-center justify-between rounded-lg border-gray-700 bg-gray-900 p-4"
+            className="flex items-center justify-between rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30"
           >
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-indigo-400">
+                <span className="text-sm font-medium text-yellow-200">
                   Ep {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="text-sm text-gray-400">
                   • {episode.durationMinutes} min
                 </span>
-                <span className="rounded-full bg-gray-700 px-2 py-0.5 text-xs text-gray-200">
+                <span className="rounded-full border border-yellow-500/30 bg-yellow-400/10 px-2 py-0.5 text-xs text-yellow-200">
                   {episode.tag}
                 </span>
               </div>
               <h3 className="font-medium text-gray-100">{episode.title}</h3>
               {episode.description && (
-                <p className="mt-1 text-sm text-gray-400">
+                <p className="mt-1 text-sm text-gray-300">
                   {episode.description}
                 </p>
               )}
@@ -207,12 +207,12 @@ export default function EpisodesList({
                   href={episode.spotifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 inline-block text-sm text-indigo-400 hover:text-indigo-300"
+                  className="mt-2 inline-block text-sm text-yellow-300 hover:text-yellow-200"
                 >
                   Listen on Spotify
                 </a>
               ) : (
-                <span className="mt-2 inline-block text-sm text-gray-500">
+                <span className="mt-2 inline-block text-sm text-gray-300">
                   Coming soon
                 </span>
               )}

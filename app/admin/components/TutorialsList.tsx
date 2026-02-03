@@ -51,7 +51,7 @@ export default function TutorialsList({
       <div className="flex items-center justify-between">
         <button
           onClick={() => setShowForm(!showForm)}
-          className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-medium text-black hover:bg-yellow-300"
         >
           {showForm ? "Cancel" : "Add Tutorial"}
         </button>
@@ -69,7 +69,7 @@ export default function TutorialsList({
       {showForm && (
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 rounded-lg border-gray-700 bg-gray-900 p-4"
+          className="space-y-4 rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30"
         >
           <div>
             <label
@@ -83,7 +83,7 @@ export default function TutorialsList({
               id="title"
               name="title"
               required
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -98,7 +98,7 @@ export default function TutorialsList({
               id="description"
               name="description"
               rows={3}
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -114,7 +114,7 @@ export default function TutorialsList({
               id="url"
               name="url"
               required
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -131,7 +131,7 @@ export default function TutorialsList({
               name="category"
               required
               placeholder="e.g., Python, Machine Learning"
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
@@ -147,14 +147,14 @@ export default function TutorialsList({
               id="sortOrder"
               name="sortOrder"
               defaultValue={0}
-              className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-gray-100"
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+            className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-medium text-black hover:bg-yellow-300 disabled:opacity-50"
           >
             {loading ? "Creating..." : "Create Tutorial"}
           </button>
@@ -165,13 +165,13 @@ export default function TutorialsList({
         {initialTutorials.map((tutorial) => (
           <div
             key={tutorial.id}
-            className="flex items-center justify-between rounded-lg border-gray-700 bg-gray-900 p-4"
+            className="flex items-center justify-between rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30"
           >
             <div>
               <h3 className="font-medium text-gray-100">{tutorial.title}</h3>
-              <p className="text-sm text-gray-400">{tutorial.category}</p>
+              <p className="text-sm text-yellow-200">{tutorial.category}</p>
               {tutorial.description && (
-                <p className="mt-1 text-sm text-gray-400">
+                <p className="mt-1 text-sm text-gray-300">
                   {tutorial.description}
                 </p>
               )}
@@ -179,7 +179,7 @@ export default function TutorialsList({
                 href={tutorial.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-block text-sm text-indigo-400 hover:text-indigo-300"
+                className="mt-2 inline-block text-sm text-yellow-300 hover:text-yellow-200"
               >
                 {tutorial.url}
               </a>
