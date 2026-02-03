@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="bg-gray-900">
+      <html lang="en" className="bg-black">
         <body
           className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden antialiased`}
         >
