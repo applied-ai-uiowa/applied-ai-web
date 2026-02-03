@@ -59,3 +59,17 @@ export type Project = typeof projects.$inferSelect;
 export type InsertProject = typeof projects.$inferInsert;
 export type BoardMember = typeof boardMembers.$inferSelect;
 export type InsertBoardMember = typeof boardMembers.$inferInsert;
+
+export const episodes = pgTable("episodes", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description"),
+  durationMinutes: integer("duration_minutes").notNull(),
+  tag: text("tag").notNull(),
+  spotifyUrl: text("spotify_url"), // null = "coming soon"
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export type Episode = typeof episodes.$inferSelect;
+export type InsertEpisode = typeof episodes.$inferInsert;

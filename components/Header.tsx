@@ -39,35 +39,17 @@ export default function Header() {
             Projects
           </Link>
           <Link
+            href="/episodes"
+            className="text-sm font-medium text-gray-200 transition hover:text-yellow-400"
+          >
+            Episodes
+          </Link>
+          <Link
             href="/board"
             className="text-sm font-medium text-gray-200 transition hover:text-yellow-400"
           >
             Board
           </Link>
-          <a
-            href="/#workshops"
-            className="text-sm font-medium text-gray-200 transition hover:text-yellow-400"
-          >
-            Workshops
-          </a>
-          <a
-            href="/#episodes"
-            className="text-sm font-medium text-gray-200 transition hover:text-yellow-400"
-          >
-            Episodes
-          </a>
-          <a
-            href="/#tools"
-            className="text-sm font-medium text-gray-200 transition hover:text-yellow-400"
-          >
-            Tools
-          </a>
-          <a
-            href="/#contact"
-            className="text-sm font-medium text-gray-200 transition hover:text-yellow-400"
-          >
-            Contact
-          </a>
         </nav>
 
         {/* Auth */}
@@ -120,30 +102,12 @@ export default function Header() {
           >
             Board
           </Link>
-          <a
-            href="/#workshops"
-            className="text-gray-200 transition hover:text-yellow-400"
-          >
-            Workshops
-          </a>
-          <a
-            href="/#episodes"
+          <Link
+            href="/episodes"
             className="text-gray-200 transition hover:text-yellow-400"
           >
             Episodes
-          </a>
-          <a
-            href="/#tools"
-            className="text-gray-200 transition hover:text-yellow-400"
-          >
-            Tools
-          </a>
-          <a
-            href="/#contact"
-            className="text-gray-200 transition hover:text-yellow-400"
-          >
-            Contact
-          </a>
+          </Link>
 
           <div className="ml-auto">
             <SignedOut>

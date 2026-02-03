@@ -15,6 +15,13 @@
       "when": 1769097519961,
       "tag": "0001_useful_rafael_vega",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1770137377062,
+      "tag": "0002_classy_jamie_braddock",
+      "breakpoints": true
     }
   ]
 }
