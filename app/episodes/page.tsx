@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { db } from "@/db";
 import { episodes } from "@/db/schema";
 import { asc } from "drizzle-orm";
@@ -102,6 +103,7 @@ export default async function EpisodesPage() {
           )}
         </div>
       </main>
+      <Footer />
     </>
   );
 }

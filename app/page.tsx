@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import MeetingCard from "@/components/MeetingCard";
+import Footer from "@/components/Footer";
 import { db } from "@/db";
 import { meeting, boardMembers } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
@@ -189,6 +190,7 @@ export default async function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
@@ -53,22 +53,7 @@ export default function Header() {
 
         {/* Auth */}
         <div className="flex items-center gap-3">
-          <SignedOut>
-            <Link
-              href="/sign-in"
-              className="inline-flex items-center justify-center rounded-xl bg-yellow-400 px-4 py-2 text-sm font-semibold text-black transition hover:bg-yellow-300"
-            >
-              Sign In
-            </Link>
-          </SignedOut>
-
           <SignedIn>
-            <Link
-              href="/admin"
-              className="hidden rounded-xl border border-yellow-500/30 bg-black/40 px-4 py-2 text-sm font-semibold text-yellow-200 transition hover:border-yellow-400/60 hover:bg-black/60 sm:inline-flex"
-            >
-              Admin
-            </Link>
             <UserButton
               appearance={{
                 elements: {
@@ -108,16 +93,6 @@ export default function Header() {
             Episodes
           </Link>
 
-          <div className="ml-auto">
-            <SignedOut>
-              <Link
-                href="/sign-in"
-                className="inline-flex items-center justify-center rounded-xl bg-yellow-400 px-3 py-1.5 font-semibold text-black transition hover:bg-yellow-300"
-              >
-                Sign In
-              </Link>
-            </SignedOut>
-          </div>
         </div>
       </div>
     </header>

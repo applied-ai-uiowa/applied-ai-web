@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { db } from "@/db";
 import { boardMembers } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
@@ -114,6 +115,7 @@ export default async function BoardPage() {
           )}
         </div>
       </main>
+      <Footer />
     </>
   );
 }
