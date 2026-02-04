@@ -189,6 +189,125 @@ export default async function Home() {
               </div>
             </section>
           </div>
+
+          {/* Connect With Us Section */}
+          <div className="mt-16">
+            <section id="connect">
+              <div className="mb-6">
+                <h2 className="text-3xl font-bold text-yellow-300">
+                  Connect With Us
+                </h2>
+                <p className="mt-2 text-gray-200">
+                  Follow us on social media and stay updated.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+                {/* GroupMe */}
+                <a
+                  href="https://groupme.com/join_group/106294198/W4gZutv4"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30 transition hover:border-yellow-400/50 hover:bg-black/60"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center">
+                    <Image
+                      src="/icons/groupme.svg"
+                      alt="GroupMe Logo"
+                      height={24}
+                      width={24}
+                    />
+                  </div>
+                  <h3 className="mt-3 font-semibold text-yellow-400">
+                    GroupMe
+                  </h3>
+                  <p className="mt-1 text-xs text-gray-400">Join the chat</p>
+                </a>
+
+                {/* LinkedIn */}
+                <a
+                  href="https://www.linkedin.com/company/applied-a-i/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30 transition hover:border-yellow-400/50 hover:bg-black/60"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center">
+                    <Image
+                      src="/icons/linkedin.svg"
+                      alt="LinkedIn Logo"
+                      height={28}
+                      width={28}
+                    />
+                  </div>
+                  <h3 className="mt-3 font-semibold text-yellow-400">
+                    LinkedIn
+                  </h3>
+                  <p className="mt-1 text-xs text-gray-400">Applied AI</p>
+                </a>
+
+                {/* Instagram */}
+                <a
+                  href="https://instagram.com/uiowa.appliedai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30 transition hover:border-yellow-400/50 hover:bg-black/60"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center">
+                    <Image
+                      src="/icons/instagram.svg"
+                      alt="Instagram Logo"
+                      height={28}
+                      width={28}
+                    />
+                  </div>
+                  <h3 className="mt-3 font-semibold text-yellow-400">
+                    Instagram
+                  </h3>
+                  <p className="mt-1 text-xs text-gray-400">@uiowa.appliedai</p>
+                </a>
+
+                {/* TikTok */}
+                <a
+                  href="https://tiktok.com/@uiowa.appliedai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30 transition hover:border-yellow-400/50 hover:bg-black/60"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center">
+                    <Image
+                      src="/icons/tiktok.svg"
+                      alt="TikTok Logo"
+                      height={24}
+                      width={24}
+                    />
+                  </div>
+                  <h3 className="mt-3 font-semibold text-yellow-400">TikTok</h3>
+                  <p className="mt-1 text-xs text-gray-400">@uiowa.appliedai</p>
+                </a>
+
+                {/* Twitter/X */}
+                <a
+                  href="https://x.com/uiowa_appliedai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-2xl border border-yellow-500/20 bg-black/40 p-4 shadow-lg shadow-black/30 transition hover:border-yellow-400/50 hover:bg-black/60"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center">
+                    <Image
+                      src="/icons/x.svg"
+                      alt="Twitter/X Logo"
+                      height={24}
+                      width={24}
+                    />
+                  </div>
+                  <h3 className="mt-3 font-semibold text-yellow-400">
+                    Twitter/X
+                  </h3>
+                  <p className="mt-1 text-xs text-gray-400">@uiowa_appliedai</p>
+                </a>
+              </div>
+            </section>
+          </div>
         </div>
       </main>
       <Footer />
