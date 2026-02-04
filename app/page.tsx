@@ -15,7 +15,8 @@ export default async function Home() {
     .select()
     .from(boardMembers)
     .where(eq(boardMembers.isActive, true))
-    .orderBy(asc(boardMembers.sortOrder));
+    .orderBy(asc(boardMembers.sortOrder))
+    .limit(6);
 
   const features = [
     {
@@ -162,10 +163,10 @@ export default async function Home() {
                     <div className="rounded-xl border border-yellow-500/20 bg-black/30 p-4">
                       <div className="text-sm text-gray-300">Email</div>
                       <a
-                        href="mailto:appliedai@uiowa.edu"
+                        href="mailto:studorg-appliedai@uiowa.edu"
                         className="mt-1 block font-medium text-gray-100 hover:text-yellow-200"
                       >
-                        appliedai@uiowa.edu
+                        studorg-appliedai@uiowa.edu
                       </a>
                     </div>
 
