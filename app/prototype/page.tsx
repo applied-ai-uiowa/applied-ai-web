@@ -131,8 +131,8 @@ export default async function PrototypePage() {
               Prototype Page
             </h1>
             <p className="max-w-3xl text-xl leading-relaxed text-gray-200">
-              Staging area for features not yet fully implemented. These sections
-              are being developed and tested before going live.
+              Staging area for features not yet fully implemented. These
+              sections are being developed and tested before going live.
             </p>
           </div>
 
@@ -293,8 +293,8 @@ export default async function PrototypePage() {
                   Questions & Contact
                 </h2>
                 <p className="mt-2 text-gray-200">
-                  Ask anything about workshops, tools, or projects — we&apos;ll get
-                  back to you.
+                  Ask anything about workshops, tools, or projects — we&apos;ll
+                  get back to you.
                 </p>
               </div>
 
@@ -326,15 +326,15 @@ export default async function PrototypePage() {
 
                   <div className="space-y-3">
                     <input
-                      className="w-full rounded-xl border border-yellow-500/20 bg-black/30 px-4 py-2 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/40"
+                      className="w-full rounded-xl border border-yellow-500/20 bg-black/30 px-4 py-2 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400/40 focus:outline-none"
                       placeholder="Name"
                     />
                     <input
-                      className="w-full rounded-xl border border-yellow-500/20 bg-black/30 px-4 py-2 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/40"
+                      className="w-full rounded-xl border border-yellow-500/20 bg-black/30 px-4 py-2 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400/40 focus:outline-none"
                       placeholder="Email"
                     />
                     <textarea
-                      className="w-full rounded-xl border border-yellow-500/20 bg-black/30 px-4 py-2 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/40"
+                      className="w-full rounded-xl border border-yellow-500/20 bg-black/30 px-4 py-2 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400/40 focus:outline-none"
                       placeholder="Your question"
                       rows={4}
                     />
@@ -351,7 +351,7 @@ export default async function PrototypePage() {
                     <div className="rounded-xl border border-yellow-500/20 bg-black/30 p-4">
                       <div className="text-sm text-gray-300">Email</div>
                       <div className="mt-1 font-medium text-gray-100">
-                        appliedai@uiowa.edu
+                        studorg-appliedai@uiowa.edu
                       </div>
                     </div>
                     <div className="rounded-xl border border-yellow-500/20 bg-black/30 p-4">
@@ -364,7 +364,9 @@ export default async function PrototypePage() {
                       </div>
                     </div>
                     <div className="rounded-xl border border-yellow-500/20 bg-black/30 p-4 sm:col-span-2">
-                      <div className="text-sm text-gray-300">Weekly meeting</div>
+                      <div className="text-sm text-gray-300">
+                        Weekly meeting
+                      </div>
                       <div className="mt-1 font-medium text-gray-100">
                         Tuesdays 8:00–9:30 AM • Any weekday after 2:30 PM
                       </div>

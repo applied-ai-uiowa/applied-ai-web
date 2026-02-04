@@ -27,20 +27,20 @@ export async function createEpisode(
       };
     }
 
-    await db.insert(episodes).values({
+    const [created] = await db.insert(episodes).values({
       title,
       description: description || null,
       durationMinutes,
       tag,
       spotifyUrl: spotifyUrl || null,
       sortOrder,
-    });
+    }).returning();
 
     revalidatePath("/episodes");
     revalidatePath("/admin");
     revalidatePath("/");
 
-    return { success: true, message: "Episode created successfully" };
+    return { success: true, message: "Episode created successfully", data: created };
   } catch (error) {
     console.error("Error creating episode:", error);
     return {
