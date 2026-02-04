@@ -13,15 +13,6 @@ function isValidUrl(url: string) {
   }
 }
 
-export async function getActiveNews(limit = 6) {
-  return db
-    .select()
-    .from(aiNews)
-    .where(eq(aiNews.isActive, true))
-    .orderBy(asc(aiNews.sortOrder), desc(aiNews.createdAt))
-    .limit(limit);
-}
-
 export async function getAllNews() {
   return db
     .select()
