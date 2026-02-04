@@ -73,3 +73,19 @@ export const episodes = pgTable("episodes", {
 
 export type Episode = typeof episodes.$inferSelect;
 export type InsertEpisode = typeof episodes.$inferInsert;
+
+export const aiNews = pgTable("ai_news", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  summary: text("summary"),
+  url: text("url").notNull(),
+  source: text("source"), // e.g., "OpenAI", "MIT Tech Review"
+  publishedAt: timestamp("published_at"), // optional
+  sortOrder: integer("sort_order").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export type AiNewsItem = typeof aiNews.$inferSelect;
+export type InsertAiNewsItem = typeof aiNews.$inferInsert;
+
