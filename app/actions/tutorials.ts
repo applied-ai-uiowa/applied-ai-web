@@ -26,18 +26,18 @@ export async function createTutorial(
       };
     }
 
-    await db.insert(tutorials).values({
+    const [created] = await db.insert(tutorials).values({
       title,
       description: description || null,
       url,
       category,
       sortOrder,
-    });
+    }).returning();
 
     revalidatePath("/tutorials");
     revalidatePath("/admin");
 
-    return { success: true, message: "Tutorial created successfully" };
+    return { success: true, message: "Tutorial created successfully", data: created };
   } catch (error) {
     console.error("Error creating tutorial:", error);
     return {

@@ -24,18 +24,18 @@ export async function createProject(formData: FormData): Promise<ActionResult> {
       };
     }
 
-    await db.insert(projects).values({
+    const [created] = await db.insert(projects).values({
       title,
       description: description || null,
       githubUrl: githubUrl || null,
       category,
       sortOrder,
-    });
+    }).returning();
 
     revalidatePath("/projects");
     revalidatePath("/admin");
 
-    return { success: true, message: "Project created successfully" };
+    return { success: true, message: "Project created successfully", data: created };
   } catch (error) {
     console.error("Error creating project:", error);
     return {

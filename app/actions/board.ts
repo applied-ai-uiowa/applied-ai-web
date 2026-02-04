@@ -29,7 +29,7 @@ export async function createBoardMember(
       };
     }
 
-    await db.insert(boardMembers).values({
+    const [created] = await db.insert(boardMembers).values({
       name,
       role,
       bio: bio || null,
@@ -38,12 +38,12 @@ export async function createBoardMember(
       githubUrl: githubUrl || null,
       sortOrder,
       isActive,
-    });
+    }).returning();
 
     revalidatePath("/board");
     revalidatePath("/admin");
 
-    return { success: true, message: "Board member created successfully" };
+    return { success: true, message: "Board member created successfully", data: created };
   } catch (error) {
     console.error("Error creating board member:", error);
     return {
