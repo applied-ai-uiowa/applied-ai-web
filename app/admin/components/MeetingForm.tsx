@@ -12,12 +12,41 @@ export default function MeetingForm({ initialData }: MeetingFormProps) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  // Helper function to convert UTC date from DB to local datetime-local string
+  const getLocalDateTimeString = (utcDateString: string | Date) => {
+    if (!utcDateString) return "";
+
+    // Create date from UTC string stored in DB
+    const date = new Date(utcDateString);
+
+    // Format as YYYY-MM-DDTHH:mm for datetime-local input
+    // datetime-local expects local timezone, so we use get* methods
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
     const formData = new FormData(e.currentTarget);
+
+    // Convert local datetime to UTC for storage
+    const datetimeInput = formData.get("datetime") as string;
+    if (datetimeInput) {
+      // datetime-input gives us local time, create Date object
+      const localDate = new Date(datetimeInput);
+
+      // Convert to UTC ISO string for database storage
+      formData.set("datetime", localDate.toISOString());
+    }
+
     const result = await updateMeeting(formData);
 
     if (result.success) {
@@ -61,13 +90,7 @@ export default function MeetingForm({ initialData }: MeetingFormProps) {
           name="datetime"
           defaultValue={
             initialData?.datetime
-              ? new Date(initialData.datetime).toLocaleString('sv-SE', {
-                  year: 'numeric',
-                  month: '2-digit',
-                  day: '2-digit',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                }).replace(' ', 'T')
+              ? getLocalDateTimeString(initialData.datetime)
               : ""
           }
           required

@@ -8,7 +8,9 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
   if (!meeting) {
     return (
       <div className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30">
-        <h2 className="mb-2 text-2xl font-bold text-yellow-300">Next Meeting</h2>
+        <h2 className="mb-2 text-2xl font-bold text-yellow-300">
+          Next Meeting
+        </h2>
         <p className="text-gray-300">No upcoming meeting scheduled.</p>
       </div>
     );
@@ -18,7 +20,7 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
     <div className="overflow-hidden rounded-2xl border border-yellow-500/20 bg-black/40 shadow-lg shadow-black/30">
       {/* Header strip */}
       <div className="border-b border-yellow-500/20 bg-black px-6 py-4">
-        <div className="text-xs font-semibold uppercase tracking-wide text-yellow-400">
+        <div className="text-xs font-semibold tracking-wide text-yellow-400 uppercase">
           Next Meeting
         </div>
         <h2 className="mt-1 text-2xl font-bold text-gray-100">
@@ -44,9 +46,10 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
               />
             </svg>
             <span>
-              {new Date(meeting.datetime).toLocaleString([], {
+              {new Date(meeting.datetime).toLocaleString("en-US", {
                 dateStyle: "medium",
                 timeStyle: "short",
+                timeZone: "America/Chicago",
               })}
             </span>
           </div>
