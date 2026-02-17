@@ -7,7 +7,10 @@ import {
   boolean,
 } from "drizzle-orm/pg-core";
 
-// Single-row table for meeting info
+/**
+ * Single-row table for meeting info
+ * (You already have this in your DB, so we keep it.)
+ */
 export const meeting = pgTable("meeting", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
@@ -18,33 +21,21 @@ export const meeting = pgTable("meeting", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
-import { pgTable, text, timestamp, uuid, boolean } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm";
-
-// Meetings table: one row per meeting/check-in link
-export const meetings = pgTable("meetings", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  title: text("title").notNull(),
-  startsAt: timestamp("starts_at", { withTimezone: true }).notNull(),
-  endsAt: timestamp("ends_at", { withTimezone: true }).notNull(),
-  isActive: boolean("is_active").notNull().default(true),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .default(sql`now()`),
-});
-
-// Attendance table: one row per submission
+/**
+ * Attendance table: one row per QR submission.
+ * Links to meeting.id (serial -> integer foreign key).
+ */
 export const attendance = pgTable("attendance", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  meetingId: uuid("meeting_id")
+  id: serial("id").primaryKey(),
+  meetingId: integer("meeting_id")
     .notNull()
-    .references(() => meetings.id, { onDelete: "cascade" }),
+    .references(() => meeting.id, { onDelete: "cascade" }),
+
   name: text("name"), // optional
   email: text("email"), // optional
-  note: text("note"), // optional ("first time", "brought a friend", etc.)
-  checkedInAt: timestamp("checked_in_at", { withTimezone: true })
-    .notNull()
-    .default(sql`now()`),
+  note: text("note"), // optional
+
+  checkedInAt: timestamp("checked_in_at").notNull().defaultNow(),
 });
 
 export const tutorials = pgTable("tutorials", {
@@ -79,16 +70,6 @@ export const boardMembers = pgTable("board_members", {
   isActive: boolean("is_active").notNull().default(true),
 });
 
-// Type exports for use in Server Actions
-export type Meeting = typeof meeting.$inferSelect;
-export type InsertMeeting = typeof meeting.$inferInsert;
-export type Tutorial = typeof tutorials.$inferSelect;
-export type InsertTutorial = typeof tutorials.$inferInsert;
-export type Project = typeof projects.$inferSelect;
-export type InsertProject = typeof projects.$inferInsert;
-export type BoardMember = typeof boardMembers.$inferSelect;
-export type InsertBoardMember = typeof boardMembers.$inferInsert;
-
 export const episodes = pgTable("episodes", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
@@ -99,9 +80,6 @@ export const episodes = pgTable("episodes", {
   sortOrder: integer("sort_order").notNull().default(0),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
-
-export type Episode = typeof episodes.$inferSelect;
-export type InsertEpisode = typeof episodes.$inferInsert;
 
 export const aiNews = pgTable("ai_news", {
   id: serial("id").primaryKey(),
@@ -115,6 +93,26 @@ export const aiNews = pgTable("ai_news", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+/**
+ * Type exports for use in Server Actions
+ */
+export type Meeting = typeof meeting.$inferSelect;
+export type InsertMeeting = typeof meeting.$inferInsert;
+
+export type Attendance = typeof attendance.$inferSelect;
+export type InsertAttendance = typeof attendance.$inferInsert;
+
+export type Tutorial = typeof tutorials.$inferSelect;
+export type InsertTutorial = typeof tutorials.$inferInsert;
+
+export type Project = typeof projects.$inferSelect;
+export type InsertProject = typeof projects.$inferSelect;
+
+export type BoardMember = typeof boardMembers.$inferSelect;
+export type InsertBoardMember = typeof boardMembers.$inferInsert;
+
+export type Episode = typeof episodes.$inferSelect;
+export type InsertEpisode = typeof episodes.$inferInsert;
+
 export type AiNewsItem = typeof aiNews.$inferSelect;
 export type InsertAiNewsItem = typeof aiNews.$inferInsert;
-
