@@ -18,6 +18,35 @@ export const meeting = pgTable("meeting", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
+import { pgTable, text, timestamp, uuid, boolean } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+
+// Meetings table: one row per meeting/check-in link
+export const meetings = pgTable("meetings", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  title: text("title").notNull(),
+  startsAt: timestamp("starts_at", { withTimezone: true }).notNull(),
+  endsAt: timestamp("ends_at", { withTimezone: true }).notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .default(sql`now()`),
+});
+
+// Attendance table: one row per submission
+export const attendance = pgTable("attendance", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  meetingId: uuid("meeting_id")
+    .notNull()
+    .references(() => meetings.id, { onDelete: "cascade" }),
+  name: text("name"), // optional
+  email: text("email"), // optional
+  note: text("note"), // optional ("first time", "brought a friend", etc.)
+  checkedInAt: timestamp("checked_in_at", { withTimezone: true })
+    .notNull()
+    .default(sql`now()`),
+});
+
 export const tutorials = pgTable("tutorials", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
