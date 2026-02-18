@@ -3,48 +3,70 @@
 import { db } from "@/db";
 import { aiNews } from "@/db/schema";
 import { asc, desc, eq } from "drizzle-orm";
-
-function isValidUrl(url: string) {
-  try {
-    new URL(url);
-    return true;
-  } catch {
-    return false;
-  }
-}
+import { revalidatePath } from "next/cache";
 
 export async function getAllNews() {
   return db
     .select()
     .from(aiNews)
-    .orderBy(asc(aiNews.sortOrder), desc(aiNews.createdAt));
+    .orderBy(desc(aiNews.createdAt), asc(aiNews.sortOrder), desc(aiNews.id));
 }
 
-export async function createNews(formData: FormData) {
-  const title = String(formData.get("title") || "").trim();
-  const url = String(formData.get("url") || "").trim();
-  const source = String(formData.get("source") || "").trim();
-  const summary = String(formData.get("summary") || "").trim();
+export async function createNews(input: {
+  title: string;
+  url: string;
+  summary?: string;
+  source?: string;
+  publishedAt?: string; // ISO string optional
+  sortOrder?: number;
+  isActive?: boolean;
+}) {
+  const title = input.title?.trim();
+  const url = input.url?.trim();
 
-  if (!title || !url) return { ok: false, error: "Title and URL are required." };
-  if (!isValidUrl(url)) return { ok: false, error: "Please enter a valid URL." };
+  if (!title) throw new Error("Title is required.");
+  if (!url) throw new Error("URL is required.");
 
-  await db.insert(aiNews).values({
-    title,
-    url,
-    source: source || null,
-    summary: summary || null,
-  });
+  const publishedAt = input.publishedAt ? new Date(input.publishedAt) : null;
 
-  return { ok: true };
+  const [created] = await db
+    .insert(aiNews)
+    .values({
+      title,
+      url,
+      summary: input.summary?.trim() || null,
+      source: input.source?.trim() || null,
+      publishedAt: publishedAt ?? null,
+      sortOrder: input.sortOrder ?? 0,
+      isActive: input.isActive ?? true,
+    })
+    .returning();
+
+  revalidatePath("/admin/news");
+  revalidatePath("/news");
+
+  return created;
 }
 
 export async function deleteNews(id: number) {
+  if (!id || Number.isNaN(Number(id))) throw new Error("Invalid id.");
   await db.delete(aiNews).where(eq(aiNews.id, id));
-  return { ok: true };
+  revalidatePath("/admin/news");
+  revalidatePath("/news");
 }
 
-export async function toggleNewsActive(id: number, isActive: boolean) {
-  await db.update(aiNews).set({ isActive }).where(eq(aiNews.id, id));
-  return { ok: true };
+export async function toggleNewsActive(id: number) {
+  if (!id || Number.isNaN(Number(id))) throw new Error("Invalid id.");
+
+  const rows = await db.select().from(aiNews).where(eq(aiNews.id, id)).limit(1);
+  const item = rows[0];
+  if (!item) throw new Error("News item not found.");
+
+  await db
+    .update(aiNews)
+    .set({ isActive: !item.isActive })
+    .where(eq(aiNews.id, id));
+
+  revalidatePath("/admin/news");
+  revalidatePath("/news");
 }
