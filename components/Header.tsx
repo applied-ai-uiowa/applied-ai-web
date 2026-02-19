@@ -49,6 +49,12 @@ export default function Header() {
           >
             Board
           </Link>
+          <Link
+            href="/meetings"
+            className="text-sm font-medium text-gray-200 transition hover:text-yellow-400"
+          >
+            Meetings
+          </Link>
         </nav>
 
         {/* Auth */}
@@ -92,7 +98,12 @@ export default function Header() {
           >
             Episodes
           </Link>
-
+          <Link
+            href="/meetings"
+            className="text-gray-200 transition hover:text-yellow-400"
+          >
+            Meetings
+          </Link>
         </div>
       </div>
     </header>

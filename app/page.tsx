@@ -3,13 +3,18 @@ import MeetingCard from "@/components/MeetingCard";
 import Footer from "@/components/Footer";
 import { db } from "@/db";
 import { meeting, boardMembers } from "@/db/schema";
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, gte } from "drizzle-orm";
 import Link from "next/link";
 import Image from "next/image";
 
 export default async function Home() {
-  const meetings = await db.select().from(meeting).limit(1);
-  const nextMeeting = meetings[0] || null;
+  const now = new Date();
+  const [nextMeeting = null] = await db
+    .select()
+    .from(meeting)
+    .where(gte(meeting.datetime, now))
+    .orderBy(asc(meeting.datetime))
+    .limit(1);
 
   const members = await db
     .select()
@@ -56,15 +61,23 @@ export default async function Home() {
               artificial intelligence and machine learning.
             </p>
             <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-300">
-              Our mission is to empower students to explore, learn, and
-              innovate by providing hands-on experiences and collaborative
-              learning opportunities in the capabilities of AI.
+              Our mission is to empower students to explore, learn, and innovate
+              by providing hands-on experiences and collaborative learning
+              opportunities in the capabilities of AI.
             </p>
           </div>
 
           {/* Meeting Card */}
           <div className="mb-12">
             <MeetingCard meeting={nextMeeting} />
+            <div className="mt-3 text-right">
+              <Link
+                href="/meetings"
+                className="text-sm font-medium text-yellow-300 hover:text-yellow-200"
+              >
+                View past meetings →
+              </Link>
+            </div>
           </div>
 
           {/* Feature Cards */}
@@ -155,7 +168,12 @@ export default async function Home() {
 
                   <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-yellow-300 transition group-hover:text-yellow-200">
                     Meet the full team
-                    <span aria-hidden className="transition group-hover:translate-x-0.5">→</span>
+                    <span
+                      aria-hidden
+                      className="transition group-hover:translate-x-0.5"
+                    >
+                      →
+                    </span>
                   </span>
                 </Link>
 
