@@ -55,6 +55,11 @@ export default async function Home() {
               University of Iowa&apos;s student organization for applied
               artificial intelligence and machine learning.
             </p>
+            <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-300">
+              Our mission is to empower students to explore, learn, and
+              innovate by providing hands-on experiences and collaborative
+              learning opportunities in the capabilities of AI.
+            </p>
           </div>
 
           {/* Meeting Card */}
@@ -103,7 +108,10 @@ export default async function Home() {
 
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 {/* Board Members */}
-                <div className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30">
+                <Link
+                  href="/board"
+                  className="group rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30 transition hover:border-yellow-400/50 hover:bg-black/60"
+                >
                   <h3 className="mb-4 text-lg font-semibold text-yellow-200">
                     Executive Board
                   </h3>
@@ -145,13 +153,11 @@ export default async function Home() {
                     </div>
                   )}
 
-                  <Link
-                    href="/board"
-                    className="mt-4 inline-block text-sm font-medium text-yellow-300 hover:text-yellow-200"
-                  >
-                    Meet the full team →
-                  </Link>
-                </div>
+                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-yellow-300 transition group-hover:text-yellow-200">
+                    Meet the full team
+                    <span aria-hidden className="transition group-hover:translate-x-0.5">→</span>
+                  </span>
+                </Link>
 
                 {/* Contact Info */}
                 <div className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30">
