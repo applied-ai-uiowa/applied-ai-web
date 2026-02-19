@@ -40,7 +40,7 @@ export default async function Home() {
     },
     {
       title: "Podcast Episodes",
-      description: "Short, practical episodes you can follow along with.",
+      description: "Short, practical episodes on AI topics you can follow along with.",
       href: "/episodes",
       cta: "Listen now",
     },
