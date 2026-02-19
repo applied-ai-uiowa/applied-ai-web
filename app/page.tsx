@@ -3,13 +3,18 @@ import MeetingCard from "@/components/MeetingCard";
 import Footer from "@/components/Footer";
 import { db } from "@/db";
 import { meeting, boardMembers } from "@/db/schema";
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, gte } from "drizzle-orm";
 import Link from "next/link";
 import Image from "next/image";
 
 export default async function Home() {
-  const meetings = await db.select().from(meeting).limit(1);
-  const nextMeeting = meetings[0] || null;
+  const now = new Date();
+  const [nextMeeting = null] = await db
+    .select()
+    .from(meeting)
+    .where(gte(meeting.datetime, now))
+    .orderBy(asc(meeting.datetime))
+    .limit(1);
 
   const members = await db
     .select()
@@ -35,7 +40,7 @@ export default async function Home() {
     },
     {
       title: "Podcast Episodes",
-      description: "Short, practical episodes you can follow along with.",
+      description: "Short, practical episodes on AI topics you can follow along with.",
       href: "/episodes",
       cta: "Listen now",
     },
@@ -55,11 +60,24 @@ export default async function Home() {
               University of Iowa&apos;s student organization for applied
               artificial intelligence and machine learning.
             </p>
+            <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-300">
+              Our mission is to empower students to explore, learn, and innovate
+              by providing hands-on experiences and collaborative learning
+              opportunities in the capabilities of AI.
+            </p>
           </div>
 
           {/* Meeting Card */}
           <div className="mb-12">
             <MeetingCard meeting={nextMeeting} />
+            <div className="mt-3 text-right">
+              <Link
+                href="/meetings"
+                className="text-sm font-medium text-yellow-300 hover:text-yellow-200"
+              >
+                View past meetings →
+              </Link>
+            </div>
           </div>
 
           {/* Feature Cards */}
@@ -103,7 +121,10 @@ export default async function Home() {
 
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 {/* Board Members */}
-                <div className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30">
+                <Link
+                  href="/board"
+                  className="group rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30 transition hover:border-yellow-400/50 hover:bg-black/60"
+                >
                   <h3 className="mb-4 text-lg font-semibold text-yellow-200">
                     Executive Board
                   </h3>
@@ -145,13 +166,16 @@ export default async function Home() {
                     </div>
                   )}
 
-                  <Link
-                    href="/board"
-                    className="mt-4 inline-block text-sm font-medium text-yellow-300 hover:text-yellow-200"
-                  >
-                    Meet the full team →
-                  </Link>
-                </div>
+                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-yellow-300 transition group-hover:text-yellow-200">
+                    Meet the full team
+                    <span
+                      aria-hidden
+                      className="transition group-hover:translate-x-0.5"
+                    >
+                      →
+                    </span>
+                  </span>
+                </Link>
 
                 {/* Contact Info */}
                 <div className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30">

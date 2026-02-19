@@ -9,8 +9,8 @@ import {
   boardMembers,
   episodes,
 } from "@/db/schema";
-import { asc } from "drizzle-orm";
-import MeetingForm from "./components/MeetingForm";
+import { asc, desc } from "drizzle-orm";
+import MeetingList from "./components/MeetingList";
 import TutorialsList from "./components/TutorialsList";
 import ProjectsList from "./components/ProjectsList";
 import BoardMembersList from "./components/BoardMembersList";
@@ -24,8 +24,10 @@ export default async function AdminPage() {
   }
 
   // Fetch data
-  const meetings = await db.select().from(meeting).limit(1);
-  const currentMeeting = meetings[0] || null;
+  const meetingsList = await db
+    .select()
+    .from(meeting)
+    .orderBy(desc(meeting.datetime));
   const tutorialsList = await db
     .select()
     .from(tutorials)
@@ -66,20 +68,24 @@ export default async function AdminPage() {
           {/* Meeting Section */}
           <section className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30">
             <h2 className="mb-6 text-2xl font-bold text-yellow-300">
-              Meeting Information
+              Meetings
             </h2>
-            <MeetingForm initialData={currentMeeting} />
+            <MeetingList meetings={meetingsList} />
           </section>
 
           {/* Tutorials Section */}
           <section className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30">
-            <h2 className="mb-6 text-2xl font-bold text-yellow-300">Tutorials</h2>
+            <h2 className="mb-6 text-2xl font-bold text-yellow-300">
+              Tutorials
+            </h2>
             <TutorialsList tutorials={tutorialsList} />
           </section>
 
           {/* Projects Section */}
           <section className="rounded-2xl border border-yellow-500/20 bg-black/40 p-6 shadow-lg shadow-black/30">
-            <h2 className="mb-6 text-2xl font-bold text-yellow-300">Projects</h2>
+            <h2 className="mb-6 text-2xl font-bold text-yellow-300">
+              Projects
+            </h2>
             <ProjectsList projects={projectsList} />
           </section>
 

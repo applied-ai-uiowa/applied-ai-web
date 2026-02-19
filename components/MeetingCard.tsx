@@ -1,4 +1,5 @@
 import { Meeting } from "@/db/schema";
+import ReactMarkdown from "react-markdown";
 
 interface MeetingCardProps {
   meeting: Meeting | null;
@@ -79,19 +80,11 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
         </div>
 
         {meeting.details && (
-          <p className="mt-4 text-gray-200">{meeting.details}</p>
+          <div className="mt-4 space-y-1 text-sm text-gray-200 [&_a]:text-yellow-300 [&_a]:underline [&_a:hover]:text-yellow-200 [&_strong]:text-gray-100 [&_ul]:list-disc [&_ul]:pl-4 [&_ol]:list-decimal [&_ol]:pl-4 [&_p]:leading-relaxed">
+            <ReactMarkdown>{meeting.details}</ReactMarkdown>
+          </div>
         )}
 
-        {meeting.rsvpLink && (
-          <a
-            href={meeting.rsvpLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center justify-center rounded-xl bg-yellow-400 px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-yellow-300"
-          >
-            RSVP Now
-          </a>
-        )}
       </div>
     </div>
   );
