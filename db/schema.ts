@@ -17,7 +17,9 @@ export const meeting = pgTable("meeting", {
   datetime: timestamp("datetime").notNull(),
   location: text("location").notNull(),
   details: text("details"),
-  rsvpLink: text("rsvp_link"),
+  slidesUrl: text("slides_url"),
+  recordingUrl: text("recording_url"),
+  imageUrl: text("image_url"),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 

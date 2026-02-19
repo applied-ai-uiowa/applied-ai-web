@@ -17,7 +17,9 @@ export async function createMeeting(
     const datetime = formData.get("datetime") as string;
     const location = formData.get("location") as string;
     const details = formData.get("details") as string;
-    const rsvpLink = formData.get("rsvpLink") as string;
+    const slidesUrl = formData.get("slidesUrl") as string;
+    const recordingUrl = formData.get("recordingUrl") as string;
+    const imageUrl = formData.get("imageUrl") as string;
 
     if (!title || !datetime || !location) {
       return {
@@ -33,7 +35,9 @@ export async function createMeeting(
         datetime: new Date(datetime),
         location,
         details: details || null,
-        rsvpLink: rsvpLink || null,
+        slidesUrl: slidesUrl || null,
+        recordingUrl: recordingUrl || null,
+        imageUrl: imageUrl || null,
       })
       .returning();
 
@@ -63,7 +67,9 @@ export async function updateMeeting(
     const datetime = formData.get("datetime") as string;
     const location = formData.get("location") as string;
     const details = formData.get("details") as string;
-    const rsvpLink = formData.get("rsvpLink") as string;
+    const slidesUrl = formData.get("slidesUrl") as string;
+    const recordingUrl = formData.get("recordingUrl") as string;
+    const imageUrl = formData.get("imageUrl") as string;
 
     if (!title || !datetime || !location) {
       return {
@@ -79,7 +85,9 @@ export async function updateMeeting(
         datetime: new Date(datetime),
         location,
         details: details || null,
-        rsvpLink: rsvpLink || null,
+        slidesUrl: slidesUrl || null,
+        recordingUrl: recordingUrl || null,
+        imageUrl: imageUrl || null,
         updatedAt: new Date(),
       })
       .where(eq(meeting.id, id));
@@ -103,7 +111,20 @@ export async function deleteMeeting(id: number): Promise<ActionResult> {
   try {
     await requireAdmin();
 
+    // Fetch the meeting first to get the imageUrl for cleanup
+    const [existing] = await db
+      .select()
+      .from(meeting)
+      .where(eq(meeting.id, id))
+      .limit(1);
+
     await db.delete(meeting).where(eq(meeting.id, id));
+
+    // Delete the image from Blob storage if it exists
+    if (existing?.imageUrl) {
+      const { deleteImage } = await import("./upload");
+      await deleteImage(existing.imageUrl);
+    }
 
     revalidatePath("/");
     revalidatePath("/meetings");

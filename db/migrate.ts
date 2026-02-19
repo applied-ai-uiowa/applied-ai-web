@@ -2,8 +2,8 @@ import { config } from "dotenv";
 import { drizzle } from "drizzle-orm/vercel-postgres";
 import { migrate } from "drizzle-orm/vercel-postgres/migrator";
 
-// Load environment variables from .env.local
-config({ path: ".env.local" });
+// Load environment variables from .env
+config({ path: ".env" });
 
 async function runMigration() {
   console.log("Running migrations...");

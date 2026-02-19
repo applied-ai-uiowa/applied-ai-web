@@ -7,6 +7,7 @@ import {
   deleteMeeting,
 } from "@/app/actions/meeting";
 import { Meeting } from "@/db/schema";
+import ImageUpload from "./ImageUpload";
 
 interface MeetingListProps {
   meetings: Meeting[];
@@ -42,6 +43,7 @@ export default function MeetingList({
   const [editingItem, setEditingItem] = useState<Meeting | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -69,7 +71,9 @@ export default function MeetingList({
           datetime: new Date(formData.get("datetime") as string),
           location: formData.get("location") as string,
           details: (formData.get("details") as string) || null,
-          rsvpLink: (formData.get("rsvpLink") as string) || null,
+          slidesUrl: (formData.get("slidesUrl") as string) || null,
+          recordingUrl: (formData.get("recordingUrl") as string) || null,
+          imageUrl: imageUrl || editingItem.imageUrl,
         };
         setItems(
           items.map((item) => (item.id === editingItem.id ? updatedItem : item))
@@ -84,6 +88,7 @@ export default function MeetingList({
       form.reset();
       setShowForm(false);
       setEditingItem(null);
+      setImageUrl("");
     } else {
       setMessage(
         result.message ||
@@ -115,12 +120,14 @@ export default function MeetingList({
 
   function handleEdit(m: Meeting) {
     setEditingItem(m);
+    setImageUrl(m.imageUrl ?? "");
     setShowForm(true);
   }
 
   function handleCancel() {
     setShowForm(false);
     setEditingItem(null);
+    setImageUrl("");
   }
 
   return (
@@ -211,7 +218,10 @@ export default function MeetingList({
               htmlFor="details"
               className="block text-sm font-medium text-gray-300"
             >
-              Details
+              Details{" "}
+              <span className="font-normal text-gray-500">
+                (markdown supported)
+              </span>
             </label>
             <textarea
               key={editingItem?.id ?? "new"}
@@ -225,20 +235,45 @@ export default function MeetingList({
 
           <div>
             <label
-              htmlFor="rsvpLink"
+              htmlFor="slidesUrl"
               className="block text-sm font-medium text-gray-300"
             >
-              RSVP Link
+              Slides URL
             </label>
             <input
               key={editingItem?.id ?? "new"}
               type="url"
-              id="rsvpLink"
-              name="rsvpLink"
-              defaultValue={editingItem?.rsvpLink ?? ""}
+              id="slidesUrl"
+              name="slidesUrl"
+              defaultValue={editingItem?.slidesUrl ?? ""}
               className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
             />
           </div>
+
+          <div>
+            <label
+              htmlFor="recordingUrl"
+              className="block text-sm font-medium text-gray-300"
+            >
+              Recording URL
+            </label>
+            <input
+              key={editingItem?.id ?? "new"}
+              type="url"
+              id="recordingUrl"
+              name="recordingUrl"
+              defaultValue={editingItem?.recordingUrl ?? ""}
+              className="mt-1 block w-full rounded-md border border-yellow-500/20 bg-black/30 px-3 py-2 text-gray-100 focus:border-yellow-400 focus:ring-yellow-400/40 focus:outline-none"
+            />
+          </div>
+
+          <ImageUpload
+            key={editingItem?.id ?? "new"}
+            currentImageUrl={editingItem?.imageUrl}
+            onUploadComplete={(url) => setImageUrl(url)}
+            label="Meeting Photo"
+          />
+          <input type="hidden" name="imageUrl" value={imageUrl} />
 
           <button
             type="submit"
@@ -271,6 +306,13 @@ export default function MeetingList({
                 </p>
                 {m.details && (
                   <p className="mt-1 text-sm text-gray-300">{m.details}</p>
+                )}
+                {(m.slidesUrl || m.recordingUrl || m.imageUrl) && (
+                  <p className="mt-1 text-xs text-yellow-400/70">
+                    {m.slidesUrl && "Slides "}
+                    {m.recordingUrl && "Recording "}
+                    {m.imageUrl && "Photo"}
+                  </p>
                 )}
               </div>
               <div className="flex gap-2">
