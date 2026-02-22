@@ -36,7 +36,7 @@ export default async function Home() {
     .from(boardMembers)
     .where(eq(boardMembers.isActive, true))
     .orderBy(asc(boardMembers.sortOrder))
-    .limit(6);
+    .limit(8);
 
   const manualNews = await db
     .select()
