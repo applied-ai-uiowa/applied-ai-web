@@ -7,9 +7,11 @@ import { submitCheckIn } from "./actions";
 export default async function CheckInPage({
   searchParams,
 }: {
-  searchParams?: { m?: string; ok?: string; error?: string };
+  searchParams: Promise<{ m?: string; ok?: string; error?: string }>;
 }) {
-  const meetingId = Number(searchParams?.m ?? "");
+  const params = await searchParams;
+
+  const meetingId = Number(params?.m ?? "");
   const validId = Number.isFinite(meetingId) && meetingId > 0;
 
   const rows = validId
@@ -18,12 +20,12 @@ export default async function CheckInPage({
 
   const m = rows[0];
 
-  const ok = searchParams?.ok === "1";
-  const error = searchParams?.error;
+  const ok = params?.ok === "1";
+  const error = params?.error;
 
   const errorMessage =
     error === "invalid_email"
-      ? "That email doesn’t look valid."
+      ? "That email doesn't look valid."
       : error === "invalid_meeting"
         ? "Invalid meeting link."
         : error === "missing_meeting"
