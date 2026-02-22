@@ -96,7 +96,7 @@ export default async function AdminPage() {
       href="/admin/news"
       className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500"
     >
-      Manage News &gt;
+      Manage News {">"}
     </a>
   </div>
   <p className="mt-2 text-gray-600 dark:text-gray-400">
