@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
 import MeetingCard from "@/components/MeetingCard";
 import Footer from "@/components/Footer";
 import { db } from "@/db";
@@ -77,20 +78,7 @@ export default async function Home() {
       <main className="min-h-screen bg-gradient-to-br from-black via-yellow-950/40 to-black">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           {/* Hero */}
-          <div className="mb-10">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight text-yellow-400 sm:text-5xl">
-              Welcome to Applied AI
-            </h1>
-            <p className="max-w-3xl text-xl leading-relaxed text-gray-200">
-              University of Iowa&apos;s student organization for applied
-              artificial intelligence and machine learning.
-            </p>
-            <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-300">
-              Our mission is to empower students to explore, learn, and innovate
-              by providing hands-on experiences and collaborative learning
-              opportunities in the capabilities of AI.
-            </p>
-          </div>
+          <HeroSection />
 
           {/* Meeting Card */}
           <div className="mb-12">
