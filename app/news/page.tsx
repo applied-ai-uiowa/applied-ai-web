@@ -1,3 +1,4 @@
+
 import React from "react";
 import { AiNewsItem } from "@/db/schema";
 import { getAllNews } from "@/app/actions/news";
@@ -25,14 +26,14 @@ export default async function NewsPage() {
 
   const activeManual = manualNews.filter((item: AiNewsItem) => item.isActive);
 
-  return (
-    <main className="min-h-screen bg-gradient-to-br from-black via-yellow-950/40 to-black">
-      <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-        <h1 className="mb-3 text-4xl font-bold text-yellow-400">AI News</h1>
-        <p className="mb-10 text-lg text-gray-300">
-          Latest in artificial intelligence, curated for you.
-        </p>
-
+return (
+    <>
+      <Header />
+      <main className="min-h-screen...">
+        ...
+      </main>
+    </>
+  );
         {/* Manual/pinned news */}
         {activeManual.length > 0 && (
           <div className="mb-12">
