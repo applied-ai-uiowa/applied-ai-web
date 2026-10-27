@@ -1,7 +1,14 @@
+import { redirect } from "next/navigation";
 import Header from "@/components/Header";
+import { isAdmin } from "@/lib/auth";
 import { getAllNews, createNews, deleteNews, toggleNewsActive } from "@/app/actions/news";
 
 export default async function AdminNewsPage() {
+  const adminAccess = await isAdmin();
+  if (!adminAccess) {
+    redirect("/");
+  }
+
   const items = await getAllNews();
 
   async function handleCreate(formData: FormData) {

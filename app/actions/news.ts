@@ -1,5 +1,6 @@
 "use server";
 
+import { requireAdmin } from "@/lib/auth";
 import { db } from "@/db";
 import { aiNews } from "@/db/schema";
 import { asc, desc, eq } from "drizzle-orm";
@@ -21,6 +22,8 @@ export async function createNews(input: {
   sortOrder?: number;
   isActive?: boolean;
 }) {
+  await requireAdmin();
+
   const title = input.title?.trim();
   const url = input.url?.trim();
 
@@ -49,6 +52,7 @@ export async function createNews(input: {
 }
 
 export async function deleteNews(id: number) {
+  await requireAdmin();
   if (!id || Number.isNaN(Number(id))) throw new Error("Invalid id.");
   await db.delete(aiNews).where(eq(aiNews.id, id));
   revalidatePath("/admin/news");
@@ -56,6 +60,7 @@ export async function deleteNews(id: number) {
 }
 
 export async function toggleNewsActive(id: number) {
+  await requireAdmin();
   if (!id || Number.isNaN(Number(id))) throw new Error("Invalid id.");
 
   const rows = await db.select().from(aiNews).where(eq(aiNews.id, id)).limit(1);
