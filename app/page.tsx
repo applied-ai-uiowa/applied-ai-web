@@ -139,7 +139,7 @@ export default async function Home() {
                   const url = item.url;
                   const source = item.source?.name || item.source;
                   const date = item.publishedAt || item.createdAt;
-                  const image = item.urlToImage;
+                  const image = item.imageUrl || item.urlToImage;
 
                   return (
                     <Tag

@@ -1,7 +1,12 @@
 import { redirect } from "next/navigation";
 import Header from "@/components/Header";
 import { isAdmin } from "@/lib/auth";
-import { getAllNews, createNews, deleteNews, toggleNewsActive } from "@/app/actions/news";
+import {
+  getAllNews,
+  createNews,
+  deleteNews,
+  toggleNewsActive,
+} from "@/app/actions/news";
 
 export default async function AdminNewsPage() {
   const adminAccess = await isAdmin();
@@ -18,6 +23,7 @@ export default async function AdminNewsPage() {
       url: String(formData.get("url") || ""),
       summary: String(formData.get("summary") || "") || undefined,
       source: String(formData.get("source") || "") || undefined,
+      imageUrl: String(formData.get("imageUrl") || "") || undefined,
       publishedAt: String(formData.get("publishedAt") || "") || undefined,
       sortOrder: Number(formData.get("sortOrder") || 0),
       isActive: formData.get("isActive") === "on",
@@ -58,11 +64,13 @@ export default async function AdminNewsPage() {
 
             <form action={handleCreate} className="grid gap-4 md:grid-cols-2">
               <div className="md:col-span-2">
-                <label className="mb-1 block text-sm text-gray-200">Title</label>
+                <label className="mb-1 block text-sm text-gray-200">
+                  Title
+                </label>
                 <input
                   name="title"
                   required
-                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500/30"
+                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-500/30 focus:outline-none"
                   placeholder="OpenAI releases..."
                 />
               </div>
@@ -72,7 +80,7 @@ export default async function AdminNewsPage() {
                 <input
                   name="url"
                   required
-                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500/30"
+                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-500/30 focus:outline-none"
                   placeholder="https://..."
                 />
               </div>
@@ -84,7 +92,7 @@ export default async function AdminNewsPage() {
                 <textarea
                   name="summary"
                   rows={3}
-                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500/30"
+                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-500/30 focus:outline-none"
                   placeholder="Short summary for the site..."
                 />
               </div>
@@ -95,8 +103,20 @@ export default async function AdminNewsPage() {
                 </label>
                 <input
                   name="source"
-                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500/30"
+                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-500/30 focus:outline-none"
                   placeholder="OpenAI / MIT Tech Review"
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="mb-1 block text-sm text-gray-200">
+                  Thumbnail URL (optional)
+                </label>
+                <input
+                  name="imageUrl"
+                  type="url"
+                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-500/30 focus:outline-none"
+                  placeholder="https://.../image.jpg"
                 />
               </div>
 
@@ -107,7 +127,7 @@ export default async function AdminNewsPage() {
                 <input
                   name="publishedAt"
                   type="datetime-local"
-                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500/30"
+                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-500/30 focus:outline-none"
                 />
               </div>
 
@@ -119,7 +139,7 @@ export default async function AdminNewsPage() {
                   name="sortOrder"
                   type="number"
                   defaultValue={0}
-                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 focus:outline-none focus:ring-2 focus:ring-yellow-500/30"
+                  className="w-full rounded-xl border border-yellow-500/20 bg-black/40 px-4 py-3 text-gray-100 focus:ring-2 focus:ring-yellow-500/30 focus:outline-none"
                 />
               </div>
 
@@ -170,7 +190,9 @@ export default async function AdminNewsPage() {
                         </span>
                       )}
                       {n.source && (
-                        <span className="text-sm text-gray-300">• {n.source}</span>
+                        <span className="text-sm text-gray-300">
+                          • {n.source}
+                        </span>
                       )}
                     </div>
 

@@ -37,7 +37,7 @@ export async function GET() {
         url: n.url,
         source: n.source,
         publishedAt: n.publishedAt,
-        imageUrl: null,
+        imageUrl: n.imageUrl,
         isManual: true,
       }));
 

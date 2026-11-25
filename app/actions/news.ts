@@ -18,6 +18,7 @@ export async function createNews(input: {
   url: string;
   summary?: string;
   source?: string;
+  imageUrl?: string;
   publishedAt?: string; // ISO string optional
   sortOrder?: number;
   isActive?: boolean;
@@ -39,6 +40,7 @@ export async function createNews(input: {
       url,
       summary: input.summary?.trim() || null,
       source: input.source?.trim() || null,
+      imageUrl: input.imageUrl?.trim() || null,
       publishedAt: publishedAt ?? null,
       sortOrder: input.sortOrder ?? 0,
       isActive: input.isActive ?? true,

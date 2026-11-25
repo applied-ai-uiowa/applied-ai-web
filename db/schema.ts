@@ -89,6 +89,7 @@ export const aiNews = pgTable("ai_news", {
   summary: text("summary"),
   url: text("url").notNull(),
   source: text("source"), // e.g., "OpenAI", "MIT Tech Review"
+  imageUrl: text("image_url"), // thumbnail shown on news cards
   publishedAt: timestamp("published_at"), // optional
   sortOrder: integer("sort_order").notNull().default(0),
   isActive: boolean("is_active").notNull().default(true),
